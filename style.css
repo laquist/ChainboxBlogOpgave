@@ -6,9 +6,18 @@
     /* background-size: 100% 100%; */
 }
 
-header h1 {
+#titleContainer {  
+    /* TEST 2 */
     top: 0;
     left: 0;
+
+    padding: 55px 110px;
+    width: 800px;
+}
+
+#titleContainer h1 {
+    font-size: 86px;
+    font-weight: bold;
 }
 
 #test {
