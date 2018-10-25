@@ -1,0 +1,61 @@
+#banner h1 {
+    top: 0;
+    left: 0;
+
+    width: 800px;
+    padding: 55px 110px;
+
+    font-size: 86px;
+    font-weight: bold;
+}
+
+/* NAV */
+#mainNav {
+    margin-top: 80px;
+}
+
+#mainNav a::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0px auto;
+    opacity: 0;
+}
+
+#mainNav a.active::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #3742fa;
+    margin: 0px auto;
+    opacity: 1;
+}
+
+/* TITLE */
+#blogTitle {
+    font-size: 2.8rem;
+    color: #3742fa;
+}
+
+/* ARTICLES */
+.card-body img {
+    max-width: 970px;
+    max-height: 516px;
+    object-fit: cover;
+}
+
+.card-body h2, .card-body p {
+    padding: 0% 14%;
+}
+
+.articleDate {
+    background-color: #3742fa;
+}
+
+.articleText {
+    line-height: 2.3;
+}
