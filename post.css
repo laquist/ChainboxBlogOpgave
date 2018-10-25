@@ -1,14 +1,9 @@
-#headContainer {
-    z-index: 1;
+/*  */
+/*  */
+/* LISES Foodblog ved siden af NAV, skal ikke have text-right, når man gør siden helt smal (når den får sin egen row/col-12) */
 
-    height: 90vh;
-}
-
-#navContainer {
-    background-color: #222222;
-
-    top: 0;
-    left: 0;
+#top {
+    background-color: black;
 }
 
 nav a {
@@ -16,26 +11,35 @@ nav a {
     font-weight: 800;
 }
 
-#imgContainer {
-    /* Til hvis der bruges position-relative */
-    /* top: -175px;
-    margin-bottom: -175px; */
-
-    top: 0px;
+header {
+    background-color: darkblue;
 }
 
-#imgContainer img {
-    max-height: 94vh;
+header img {
+    max-height: 835px;
     object-fit: cover;
 }
 
+#imgText {
+    top: -110px;
+    left: 0px;
+}
+
+#imgText p {
+    font-size: 0.9rem;
+}
+
+#overlay {
+    top: 0;
+    left: 0;
+
+    background: rgba(0, 0, 0, .5);
+}
+
 main article {
+    margin-top: -87px;
     background-color: white;
-    height: 1000px;
-
-    width: 80%;
-    /* Til hvis der bruges positin-relative; */
-    /* top: -100px; */
-
-    top: -65px;
+    
+    font-size: 1.1rem;
+    line-height: 2.3rem;
 }
