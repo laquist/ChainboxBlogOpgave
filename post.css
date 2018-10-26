@@ -13,23 +13,9 @@ header img {
     object-fit: cover;
 }
 
-#overlay {
-    top: 0;
-    left: 0;
-
-    background: rgba(0, 0, 0, .5);
-}
-
 #imgText p {
     font-size: 0.9rem;
 }
-
-/* Dette vil positionere teksten på header billedet bedre ift. opgaven, men det fungerer meget bedre mht. at siden skal være responsiv, og jeg synes det stadig ser fint ud. Dette kan evt. laves som ekstra opgave, med hjælp af media queries. */
-/* Giv #imgText class="position-relative" */
-/* #imgText {
-    top: -110px;
-    left: 0px;
-} */
 
 /* MAIN */
 main article {
