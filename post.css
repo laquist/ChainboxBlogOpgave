@@ -1,7 +1,3 @@
-/*  */
-/*  */
-/* LISES Foodblog ved siden af NAV, skal ikke have text-right, når man gør siden helt smal (når den får sin egen row/col-12) */
-
 #top {
     background-color: black;
 }
@@ -46,20 +42,14 @@ main article {
     line-height: 2.3rem;
 }
 
-/* @media screen and (max-width: 548px) {
-    #top h4 {
-      font-size: 1.3rem;
-    }
-
-    #top nav a {
-        font-size: 0.7rem;
-    }
-} */
-
-/* 548px */
-
 @media screen and (max-width: 768px) {
     main article {
         margin-top: 0px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    #imgText h1 {
+        font-size: 1.8rem;
     }
 }
