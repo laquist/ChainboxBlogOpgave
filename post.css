@@ -20,10 +20,12 @@ header img {
     object-fit: cover;
 }
 
-#imgText {
+/* Dette vil positionere teksten på header billedet bedre ift. opgaven, men det fungerer meget bedre mht. at siden skal være responsiv, og jeg synes det stadig ser fint ud. Dette kan evt. laves som ekstra opgave, med hjælp af media queries. */
+/* Giv #imgText class="position-relative" */
+/* #imgText {
     top: -110px;
     left: 0px;
-}
+} */
 
 #imgText p {
     font-size: 0.9rem;
@@ -42,4 +44,22 @@ main article {
     
     font-size: 1.1rem;
     line-height: 2.3rem;
+}
+
+/* @media screen and (max-width: 548px) {
+    #top h4 {
+      font-size: 1.3rem;
+    }
+
+    #top nav a {
+        font-size: 0.7rem;
+    }
+} */
+
+/* 548px */
+
+@media screen and (max-width: 768px) {
+    main article {
+        margin-top: 0px;
+    }
 }
