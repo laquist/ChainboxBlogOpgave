@@ -1,3 +1,4 @@
+/* TOP - TITLE + NAV */
 #top {
     background-color: black;
 }
@@ -7,24 +8,9 @@ nav a {
     font-weight: 800;
 }
 
-header {
-    background-color: darkblue;
-}
-
 header img {
     max-height: 835px;
     object-fit: cover;
-}
-
-/* Dette vil positionere teksten på header billedet bedre ift. opgaven, men det fungerer meget bedre mht. at siden skal være responsiv, og jeg synes det stadig ser fint ud. Dette kan evt. laves som ekstra opgave, med hjælp af media queries. */
-/* Giv #imgText class="position-relative" */
-/* #imgText {
-    top: -110px;
-    left: 0px;
-} */
-
-#imgText p {
-    font-size: 0.9rem;
 }
 
 #overlay {
@@ -34,6 +20,18 @@ header img {
     background: rgba(0, 0, 0, .5);
 }
 
+#imgText p {
+    font-size: 0.9rem;
+}
+
+/* Dette vil positionere teksten på header billedet bedre ift. opgaven, men det fungerer meget bedre mht. at siden skal være responsiv, og jeg synes det stadig ser fint ud. Dette kan evt. laves som ekstra opgave, med hjælp af media queries. */
+/* Giv #imgText class="position-relative" */
+/* #imgText {
+    top: -110px;
+    left: 0px;
+} */
+
+/* MAIN */
 main article {
     margin-top: -87px;
     background-color: white;
@@ -42,6 +40,7 @@ main article {
     line-height: 2.3rem;
 }
 
+/* MEDIA QUERIES */
 @media screen and (max-width: 768px) {
     main article {
         margin-top: 0px;

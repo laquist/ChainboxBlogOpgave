@@ -1,4 +1,38 @@
-#banner h1 {
+header img {
+    object-fit: cover;
+}
+
+#imgText h1 {
+    font-size: 86px;
+    padding: 55px 80px;
+}
+
+#navContainer {
+    /* margin-top: 80px; */
+}
+
+nav a::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0px auto;
+    opacity: 0;
+}
+
+nav a.active::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #3742fa;
+    margin: 0px auto;
+    opacity: 1;
+}
+
+/* #banner h1 {
     top: 0;
     left: 0;
 
@@ -7,12 +41,13 @@
 
     font-size: 86px;
     font-weight: bold;
-}
+} */
 
 /* NAV */
-#mainNav {
+
+/* #mainNav {
     margin-top: 80px;
-}
+} */
 
 #mainNav a::before {
     content: '';
