@@ -13,23 +13,84 @@
     <title>CMS - Lises Foodblog</title>
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid h-100">
         <div class="row bg-dark p-3 justify-content-between align-items-center">
-            <p class="text-white d-inline-block m-0">CMS - Lises Foodblog</p>
+            <p id="title" class="text-white d-inline-block m-0">CMS - Lises Foodblog</p>
             <p class="text-white d-inline-block m-0">Login</p>
         </div>
 
-        <div class="row">
-            <aside class="col-2">
+        <div class="row h-100" id="secondRow">
+          <aside class="col-12 col-lg-2 p-0">
+            <div class="navbar navbar-expand-lg navbar-light p-0">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav mr-auto d-block w-100">
 
+                  <div class="navContainer d-inline-block w-100">
+                    <h3 class="px-3 py-2">Posts</h3>
+                    <nav class="nav">
+                      <a class="nav-link w-100 text-primary active" href="#">Publish post</a>
+                      <a class="nav-link w-100 text-primary" href="#">Edit post</a>
+                    </nav>
+                  </div>
+  
+                  <div class="navContainer d-inline-block w-100">
+                    <h3 class="px-3 py-2 mt-4">Users</h3>
+                    <nav class="nav">
+                      <a class="nav-link w-100 text-primary" href="#">Create user</a>
+                      <a class="nav-link w-100 text-primary" href="#">Edit user</a>
+                    </nav>
+                  </div>
+
+                </div>
+              </div>
+            </div>           
             </aside>
 
-            <main class="col-10">
+            <main class="col-12 col-lg-10 p-5">
+              <h1 class="mb-4">Publish a new post</h1>
 
+              <form>
+                <div class="form-group">
+                  <label for="titleInput">Post title</label>
+                  <input type="text" class="form-control" id="titleInput" placeholder="Write the title of your post">
+                </div>
+
+                <div class="form-group">
+                  <label for="authorSelect">Select author</label>
+                  <select class="form-control" id="authorSelect">
+                    <option disabled selected hidden>Select post author</option>
+                    <option>1</option>
+                    <option>2</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="contentInput">Post content</label>
+                  <textarea class="form-control" id="contentInput" rows="6" placeholder="Write the content of your post..."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="imageInput" class="d-block">Featured image</label>
+                  <button type="button" class="btn btn-outline-dark">Chose image</button>
+
+                  <p class="d-inline-block px-3">No image chosen</p>
+                  <p class="text-muted" id="imageTextHelp">Chose an image from the internet and use its URL.</p>
+
+                  <!-- <input type="url" class="form-control" id="exampleFormControlFile1"> -->
+                </div>
+
+                <button type="button" class="btn text-white px-3 float-right" id="publishBtn">Publish</button>
+              </form>
             </main>
         </div>
     </div>
 
+    <!-- Personal JS -->
+    <script src="/src/js/test.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

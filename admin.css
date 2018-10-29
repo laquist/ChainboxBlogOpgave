@@ -1,8 +1,55 @@
-aside {
-    height: 500px;
-    background-color: lightgrey;
+body, html {
+    height: 100%;
 }
 
-main {
-    height: 500px;
+#title {
+    font-size: 1.4rem;
+}
+
+aside {
+    background-color: #eceeef;
+}
+
+/* NAV */
+.nav .active {
+    background-color: #1c7cd5;
+    color: white!important;
+}
+
+.nav a {
+    font-size: 1.05rem;
+}
+
+.nav-link {
+    padding: 0.5rem 2rem!important;
+}
+
+/* FORMS */
+main form {
+    max-width: 620px;
+}
+
+#imageTextHelp {
+    font-size: 0.9rem;
+}
+
+#publishBtn {
+    background-color: #1c7cd5;
+    border-color: #1c7cd5;
+    font-size: 1.05rem;
+}
+
+/* NAV COLLAPSE */
+@media screen and (max-width: 992px) {
+    .navContainer {
+        text-align: center;
+    }
+
+    #secondRow {
+        height: auto!important;
+    }
+
+    aside:first-child {
+        padding: 0.3rem!important;
+    }
 }
