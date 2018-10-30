@@ -6,77 +6,75 @@ class Blog {
         // Skal kalde saveData
     }
 
-    // getData () {
-    //     //Gets from JSON API to data object.
-
-    //     //Skal få users og gemme i data objektet
-    //     //Skal få posts og gemme i data objektet (og så skal authoren gerne være under data-> users, som så skal kobles sammen)
-    // }
-
     saveData () {
         //Saves data object via JSON API
     }
 
-
-    //Kan jeg lave en genererisk metode som bare GETTER fra JSON? I stedet for at skulle have:
-    // Alle posts, en specifik post, alle user, en specifik user, en specifik user og hans posts, en specifik user og en specifik post fra ham
-    
-    
-    //Den skal kunne have 4 argumenter fordi den skal kunne få: en post (alle), en user, en users posts (alle), en users specifikke post (https://localhost/api/user/1/post/1) 
-    //Er kun static for at teste!
-    static getData (type, arg1, arg2, arg3, arg4) {
+    // Er static for at teste
+    static getData (requestInfo) {
         let url = 'https://localhost/api/';
-        
-        if (type === 'post') {
-           url += 'post'
-           //All posts
-        }
-        else if (type === 'user') {
-            
-        }
-        else if (type === 'both') {
+        let error = false;
+        let answer;
 
+        if (requestInfo.user && requestInfo.post && requestInfo.userId != 0) {
+            // https://localhost/api/user/1/post
+            url += 'user/' + requestInfo.userId + '/post';
+            if (requestInfo.postId != 0) {
+                // https://localhost/api/user/1/post/1
+                url += '/' + requestInfo.postId;
+            }
+        }
+        else if (!requestInfo.user) {
+            // https://localhost/api/post
+            url += 'post';
+            if (requestInfo.postId != 0) {
+                // https://localhost/api/post/1
+                url += '/' + requestInfo.postId;
+            }
+        }
+        else if (!requestInfo.post) {
+            // https://localhost/api/user
+            url += 'user';
+            if (requestInfo.userId != 0) {
+                // https://localhost/api/user/1
+                url += '/' + requestInfo.userId;
+            }
         }
         else {
-            //ERROR
+            // ERROR
+            error = true;
         }
+
+        // TEST
+        // url = 'https://jsonplaceholder.typicode.com/posts/1/users/';
+        url = 'https://jsonplaceholder.typicode.com/posts/';
+
+        if (!error) {
+            axios.get(url)
+            .then(function (response) {
+                // handle success
+                console.log(response);
+                // console.log(response.data);
+                //response.data tror jeg er ens json data allerede formateret til JS objects.
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+        }
+
+        console.log('answer ==    ' + answer)
+        return answer;
     }
 }
 
 let data = {
-    //Behøver jeg lave noget i dette object? Det bliver vel bare fyldt ud fra den info jeg får.
-    // user -> post -> comments
-    // user: {
-    //     posts: {
-    //         comments: {
 
-    //         }
-    //     }
-    // }
-
-    // users: [],
-    // posts: {
-    //     comments: {
-
-    //     }
-    // }
 }
 
-// Få alle posts:
-// https://localhost/api/post
-
-// få en blogpost:
-// https://localhost/api/post/1
-// 1 værende id på en blogpost
-
-// få alle users:
-// https://localhost/api/user
-
-// få en bruger og hans tilhørende information:
-// https://localhost/api/user/1
-
-// få en bruger og hans tilhørende posts:
-// https://localhost/api/user/1/post
-
-// få en bruger og en af hans specifikke posts:
-// https://localhost/api/user/1/post/1
+// requestInfo = {
+//     user: false,
+//     userId: 0,
+//     post: false,
+//     postId: 0
+// }
