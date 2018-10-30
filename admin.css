@@ -10,6 +10,7 @@ aside {
     background-color: #eceeef;
 }
 
+
 /* NAV */
 .nav .active {
     background-color: #1c7cd5;
@@ -23,6 +24,7 @@ aside {
 .nav-link {
     padding: 0.5rem 2rem!important;
 }
+
 
 /* FORMS */
 main form {
@@ -39,7 +41,8 @@ main form {
     font-size: 1.05rem;
 }
 
-/* NAV COLLAPSE */
+
+/* MEDIA QUERIES - NAV COLLAPSE */
 @media screen and (max-width: 992px) {
     .navContainer {
         text-align: center;

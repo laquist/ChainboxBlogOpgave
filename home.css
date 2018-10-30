@@ -9,6 +9,7 @@ header img {
     padding: 55px 80px;
 }
 
+
 /* NAV */
 nav a::before {
     content: '';
@@ -31,6 +32,7 @@ nav a.active::before {
     opacity: 1;
 }
 
+
 /* ARTICLES */
 .card-body img {
     max-width: 970px;
@@ -50,6 +52,8 @@ nav a.active::before {
     line-height: 2.3;
 }
 
+
+/* MEDIA QUERIES */
 @media screen and (max-width: 1200px) {
     #imgText h1 {
         font-size: 60px;
@@ -75,7 +79,3 @@ nav a.active::before {
         margin-top: 1rem!important;
     }
 }
-
-/* @media screen and (max-width: ) {
-
-} */
