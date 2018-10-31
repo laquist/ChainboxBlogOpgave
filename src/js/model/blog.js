@@ -10,33 +10,29 @@ class Blog {
         //Saves data object via JSON API
     }
 
-    // Er static for at teste
-    static getData (requestInfo) {
-        let url = 'https://localhost/api/';
+    getData (requestInfo) {
+        let url = 'https://localhost:44321/api/';
         let error = false;
         let answer;
 
         if (requestInfo.user && requestInfo.post && requestInfo.userId != 0) {
-            // https://localhost/api/user/1/post
-            url += 'user/' + requestInfo.userId + '/post';
+            url += 'userinfoes' + requestInfo.userId + '/posts';
+
             if (requestInfo.postId != 0) {
-                // https://localhost/api/user/1/post/1
-                url += '/' + requestInfo.postId;
+                url += '/' + requestInfo.postId;  
             }
         }
         else if (!requestInfo.user) {
-            // https://localhost/api/post
-            url += 'post';
+            url += 'posts';
+
             if (requestInfo.postId != 0) {
-                // https://localhost/api/post/1
                 url += '/' + requestInfo.postId;
             }
         }
         else if (!requestInfo.post) {
-            // https://localhost/api/user
-            url += 'user';
+            url += 'userinfoes';
+
             if (requestInfo.userId != 0) {
-                // https://localhost/api/user/1
                 url += '/' + requestInfo.userId;
             }
         }
@@ -45,31 +41,25 @@ class Blog {
             error = true;
         }
 
-        // TEST
-        // url = 'https://jsonplaceholder.typicode.com/posts/1/users/';
-        url = 'https://jsonplaceholder.typicode.com/posts/';
-
         if (!error) {
-            axios.get(url)
-            .then(function (response) {
-                // handle success
-                console.log(response);
-                // console.log(response.data);
-                //response.data tror jeg er ens json data allerede formateret til JS objects.
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
+            async function getStuff() {
+                try {
+                    const response = await axios.get(url);    
+                  
+                    return response.data;
+                } 
+                catch (error) {
+                    console.error(error);
+                }
+            }
+    
+          return getStuff();
         }
-
-        console.log('answer ==    ' + answer)
-        return answer;
     }
 }
 
 let data = {
-
+    
 }
 
 // requestInfo = {

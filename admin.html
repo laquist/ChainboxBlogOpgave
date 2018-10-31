@@ -62,9 +62,9 @@
                 <div class="form-group">
                   <label for="authorSelect">Select author</label>
                   <select class="form-control" id="authorSelect">
-                    <option disabled selected hidden>Select post author</option>
-                    <option>1</option>
-                    <option>2</option>
+                    <option id="default" disabled selected hidden>Select post author</option>
+                    <!-- <option>1</option> -->
+                    <!-- <option>2</option> -->
                   </select>
                 </div>
 
@@ -86,17 +86,6 @@
             </main>
         </div>
     </div>
-
-    <!-- Personal JS -->
-    <script src="src/js/model/blog.js"></script>
-    <script src="src/js/model/user.js"></script>
-    <script src="src/js/model/post.js"></script>
-    <script src="src/js/model/comment.js"></script>
-    <script src="src/js/view/view.js"></script>
-    <script src="src/js/ctrl/ctrl.js"></script>
-    
-    <!-- TEMP -->
-    <script src="/src/js/test.js"></script>
     
     <!-- BOOTSTRAP TOOLS -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -106,5 +95,18 @@
 
     <!-- Axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Personal JS -->
+    <script src="src/js/model/blog.js"></script>
+    <script src="src/js/model/user.js"></script>
+    <script src="src/js/model/post.js"></script>
+    <script src="src/js/model/comment.js"></script>
+
+    <script src="src/js/view/view.js"></script>
+    <script src="src/js/view/homeView.js"></script>
+    <script src="src/js/view/postView.js"></script>
+    <script src="src/js/view/adminView.js"></script>
+
+    <script src="src/js/ctrl/ctrl.js"></script>
   </body>
 </html>

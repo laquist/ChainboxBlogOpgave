@@ -1,11 +1,23 @@
-class View {
-    getInfo () {
-        let info = {};
-        //Gets info from input fields in admin.html
-        //Returns object
+class View {  
+    getDOMstrings () {
+        return DOMstrings;
     }
-    
-    //Metode til at adde/create posts på forsiden
-    //Metode til at adde/create en enkelt post på blogpost.html siden.
-
 }
+
+let DOMstrings = {
+    home: {
+
+    },
+    post: {
+
+    },
+    admin: {
+        title: '#titleInput',
+        author: '#authorSelect',
+        defaultAuthor: '#default',
+        content: '#contentInput',
+        image: '#imageInput',
+        imageBtn: '#imageInputBtn',
+        publishBtn: '#publishBtn'
+    }
+};

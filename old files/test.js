@@ -1,9 +1,9 @@
-console.log('test');
+// console.log('test');
 
 (function () {
     let element = document.getElementById('imageInputBtn');
-    console.log(element);
-    console.log('hej');
+    // console.log(element);
+    // console.log('hej');
 
     element.addEventListener('click', function () {
         let imgURL = prompt("Please enter the image URL");
