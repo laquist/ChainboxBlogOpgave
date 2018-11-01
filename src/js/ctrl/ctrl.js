@@ -2,9 +2,11 @@ let blog, view, homeView, postView, adminView;
 
 class Controller {
     static newPost() {
+        //Gets info from view
         const info = adminView.getInfo();
 
-        
+        //
+
     }
 
     static updateAllPosts () {
@@ -27,14 +29,14 @@ class Controller {
             postId: 0
         };
 
-        //test
-        blog.loadData(requestInfo);
+        //Loads users/authors from API
+        // blog.loadData(requestInfo);
+        blog.loadData(requestInfo)
 
-        //Gets array of authors
-        // blog.getData(requestInfo).then(function (authorsArr) {
-        //     //Sends array of authors to View
-        //     adminView.updateAuthors(authorsArr);
-        // });
+        const data = blog.getData();
+
+        //Sends to view
+        adminView.updateAuthors(data.users);
     }
 
     static setupEventListeners () {

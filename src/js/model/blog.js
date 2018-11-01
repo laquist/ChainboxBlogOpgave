@@ -1,5 +1,5 @@
 class Blog {
-    newPost () {
+    newPost (info) {
         // Skal IKKE finde ID. Det får den når man saver til API'en (og har så et ID når du henter fra API'en)
         // Skal lave ny post
         // Skal gemme den i data objektet
@@ -29,7 +29,7 @@ class Blog {
             console.log('Error while saving')
         });
     }
-
+    
     loadData (requestInfo) {
         let url = 'https://localhost:44321/api/';
         let error = false;
@@ -77,7 +77,7 @@ class Blog {
                 this.getFromAPI(url)
                 .then(function (response) {
                     //Creates new User object
-                    let newUser = new User(response.name, response.username, response.profilFictureUrl, response.numberOfPosts, response.numberOfComments, response.registerDate);
+                    let newUser = new User(response.userInfoID, response.name, response.username, response.profilFictureUrl, response.numberOfPosts, response.numberOfComments, response.registerDate);
 
                     //Sets user ID
                     newUser.userId = response.userInfoID;
@@ -94,12 +94,12 @@ class Blog {
                 url += 'userinfoes';
     
                 this.getFromAPI(url)
-                .then(function (response) {                
+                .then(function (response)     {                
                     //Adds each user to data object
                     response.forEach(user => {
                         //Creates new User object
-                        let newUser = new User(user.name, user.username, user.profilFictureUrl, user.numberOfPosts, user.numberOfComments, user.registerDate);
-                        
+                        let newUser = new User(user.userInfoID, user.name, user.username, user.profilPictureUrl, user.numberOfPosts, user.numberOfComments, user.registerDate);
+
                         //Sets user ID
                         newUser.userId = user.userInfoID;
                         
@@ -164,7 +164,9 @@ class Blog {
         }
     }
 
-    getData (type) {
+    getData () {
+        return data;
+
         //if users, return data.users, osv
         //users, posts, comments (skal så også have et post ID for at kunne returne)
     }
