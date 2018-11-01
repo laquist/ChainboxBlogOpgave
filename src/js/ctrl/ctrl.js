@@ -11,6 +11,13 @@ class Controller {
 
     }
 
+    // static test () {
+    //     const a = blog.getFromAPItest('https://localhost:44321/api/userinfoes');
+    //     a.then(function (value) {
+    //         console.log(value);
+    //     })
+    // }
+
     //Updates the author form in admin.html
     static updateAuthorForm () {
         const requestInfo = {
@@ -20,11 +27,14 @@ class Controller {
             postId: 0
         };
 
+        //test
+        blog.loadData(requestInfo);
+
         //Gets array of authors
-        blog.getData(requestInfo).then(function (authorsArr) {
-            //Sends array of authors to View
-            adminView.updateAuthors(authorsArr);
-        });
+        // blog.getData(requestInfo).then(function (authorsArr) {
+        //     //Sends array of authors to View
+        //     adminView.updateAuthors(authorsArr);
+        // });
     }
 
     static setupEventListeners () {
@@ -54,10 +64,9 @@ class Controller {
                 }
             });
 
+            //Page load
             window.addEventListener('load', function () {
-                //Updates author form
                 Controller.updateAuthorForm();
-
             });
         }
     }
@@ -86,5 +95,3 @@ class Controller {
 
 // Starter
 Controller.initialize();
-
-//Husk at admin siden skal loade og indsætte authors (users), så man kan vælge dem i den select form der er 

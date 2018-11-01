@@ -6,65 +6,131 @@ class Blog {
         // Skal kalde saveData
     }
 
-    saveData () {
-        //Saves data object via JSON API
+    postToAPI (url, data) {
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
-    getData (requestInfo) {
+    saveData (url, data) {
+
+    }
+
+    async getFromAPI (url) {
+        try {
+            const response = await axios.get(url);    
+            return response.data;
+        } 
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    loadData (requestInfo) {
         let url = 'https://localhost:44321/api/';
         let error = false;
         let answer;
 
-        if (requestInfo.user && requestInfo.post && requestInfo.userId != 0) {
-            url += 'userinfoes' + requestInfo.userId + '/posts';
-
-            if (requestInfo.postId != 0) {
-                url += '/' + requestInfo.postId;  
+        //Validates requestInfo
+        if(typeof(requestInfo.user) === "boolean" 
+        && typeof(requestInfo.post) === "boolean"
+        && Number.isInteger(requestInfo.userId)
+        && Number.isInteger(requestInfo.postId)){
+            if (requestInfo.user && requestInfo.post && requestInfo.userId != 0 && requestInfo.postId != 0) {
+                url += 'userinfoes/' + requestInfo.userId + '/posts/' + requestInfo.postId;
+    
+                //Not available in API atm
+                console.log('Out of service')
+    
+                // this.getFromAPI(url)
+                // .then(function (response) {
+                //     // Do stuff
+                // })
+                // .catch (function (error) {
+                //     console.log(error);
+                // });
             }
-        }
-        else if (!requestInfo.user) {
-            url += 'posts';
-
-            if (requestInfo.postId != 0) {
-                url += '/' + requestInfo.postId;
+            else if (requestInfo.user && requestInfo.post && requestInfo.userId != 0) {
+                url += 'userinfoes' + requestInfo.userId + '/posts';
+    
+                //Not available in API atm
+                console.log('Out of service')
+    
+                // this.getFromAPI(url)
+                // .then(function (response) {
+                //     // Do stuff
+                // })
+                // .catch (function (error) {
+                //     console.log(error);
+                // });
             }
-        }
-        else if (!requestInfo.post) {
-            url += 'userinfoes';
-
-            if (requestInfo.userId != 0) {
-                url += '/' + requestInfo.userId;
+            else if (requestInfo.user && requestInfo.userId != 0) {
+                url += 'userinfoes' + '/' + requestInfo.userId;
+    
+                this.getFromAPI(url)
+                .then(function (response) {
+                    //Adds user to data object       
+                    data.users[response.userInfoID] = response;
+                })
+                .catch (function (error) {
+                    console.log(error);
+                });
+            }
+            else if (requestInfo.user) {
+                url += 'userinfoes';
+    
+                this.getFromAPI(url)
+                .then(function (response) {                
+                    //Adds each user to data object
+                    response.forEach(user => {
+                        data.users[user.userInfoID] = user;
+                    });
+                })
+                .catch (function (error) {
+                    console.log(error);
+                });
+            }
+            else if (requestInfo.post && requestInfo.postId != 0) {
+                url += 'posts' + '/' + requestInfo.postId;
+    
+                this.getFromAPI(url)
+                .then(function (response) {
+                    //Adds post to data object       
+                    data.posts[response.postId] = response;
+                })
+                .catch (function (error) {
+                    console.log(error);
+                });
+            }
+            else if (requestInfo.post) {
+                url += 'posts';
+    
+                this.getFromAPI(url)
+                .then(function (response) {
+                    //Adds each post to data object
+                    response.forEach(post => {
+                        data.posts[post.postId] = post;
+                    });
+                })
+                .catch (function (error) {
+                    console.log(error);
+                });
             }
         }
         else {
-            // ERROR
-            error = true;
-        }
-
-        if (!error) {
-            async function getStuff() {
-                try {
-                    const response = await axios.get(url);    
-                  
-                    return response.data;
-                } 
-                catch (error) {
-                    console.error(error);
-                }
-            }
-    
-          return getStuff();
+            console.log('Error in (requestInfo)');
         }
     }
 }
 
 let data = {
-    
-}
-
-// requestInfo = {
-//     user: false,
-//     userId: 0,
-//     post: false,
-//     postId: 0
-// }
+    users: {},
+    posts: {}
+};

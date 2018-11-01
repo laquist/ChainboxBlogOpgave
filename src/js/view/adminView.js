@@ -16,7 +16,6 @@ class AdminView {
         else {
             //ERROR
             error = true;
-            // console.log('error');
         }
 
         if (!error) {
@@ -34,6 +33,7 @@ class AdminView {
     updateAuthors (authors) {
         const authorsElement = document.querySelector(DOMstrings.admin.author);
 
+        //Creates an option element with relavant id and text
         authors.forEach(author => {
             let newOption = document.createElement('option');
             newOption.text = author.name;
