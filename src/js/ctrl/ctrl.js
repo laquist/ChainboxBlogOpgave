@@ -8,17 +8,17 @@ class Controller {
     }
 
     static updateAllPosts () {
+        const requestInfo = {
+            user: false,
+            userId: 0,
+            post: true,
+            postId: 0
+        };
 
+        blog.loadData(requestInfo);
     }
 
-    // static test () {
-    //     const a = blog.getFromAPItest('https://localhost:44321/api/userinfoes');
-    //     a.then(function (value) {
-    //         console.log(value);
-    //     })
-    // }
-
-    //Updates the author form in admin.html
+    //Updates the author form in admin.html 
     static updateAuthorForm () {
         const requestInfo = {
             user: true,
