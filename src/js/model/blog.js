@@ -8,16 +8,6 @@ class Blog {
 
     }
 
-    async getFromAPI (url) {
-        try {
-            const response = await axios.get(url);    
-            return response.data;
-        } 
-        catch (error) {
-            console.error(error);
-        }
-    }
-
     postToAPI (url, data) {
         axios.post(url, data)
         .then(function (response) {
@@ -30,7 +20,7 @@ class Blog {
         });
     }
     
-    loadData (requestInfo) {
+    loadData (requestInfo, callBackFunc) {
         let url = 'https://localhost:44321/api/';
         let error = false;
         let answer;
@@ -73,17 +63,20 @@ class Blog {
             //Specific user
             else if (requestInfo.user && requestInfo.userId != 0) {
                 url += 'userinfoes' + '/' + requestInfo.userId;
-    
-                this.getFromAPI(url)
+
+                axios.get(url)
                 .then(function (response) {
                     //Creates new User object
-                    let newUser = new User(response.userInfoID, response.name, response.username, response.profilFictureUrl, response.numberOfPosts, response.numberOfComments, response.registerDate);
+                    let newUser = new User(response.data.userInfoID, response.data.name, response.data.username, response.data.profilFictureUrl, response.data.numberOfPosts, response.data.numberOfComments, response.data.registerDate);
 
                     //Sets user ID
                     newUser.userId = response.userInfoID;
                     
                     //Adds user to data object
                     data.users[newUser.userId] = newUser;
+
+                    //Runs the callBack function with the result
+                    callBackFunc(data.users[newUser.userId]);
                 })
                 .catch (function (error) {
                     console.log(error);
@@ -92,11 +85,11 @@ class Blog {
             //All users
             else if (requestInfo.user) {
                 url += 'userinfoes';
-    
-                this.getFromAPI(url)
-                .then(function (response)     {                
+
+                axios.get(url)
+                .then(function (response) {
                     //Adds each user to data object
-                    response.forEach(user => {
+                    response.data.forEach(user => {
                         //Creates new User object
                         let newUser = new User(user.userInfoID, user.name, user.username, user.profilPictureUrl, user.numberOfPosts, user.numberOfComments, user.registerDate);
 
@@ -106,6 +99,9 @@ class Blog {
                         //Adds user to data object
                         data.users[newUser.userId] = newUser;
                     });
+
+                    //Runs the callBack function with the result
+                    callBackFunc(data.users);
                 })
                 .catch (function (error) {
                     console.log(error);
@@ -115,10 +111,10 @@ class Blog {
             else if (requestInfo.post && requestInfo.postId != 0) {
                 url += 'posts' + '/' + requestInfo.postId;
     
-                this.getFromAPI(url)
+                axios.get(url)
                 .then(function (response) {
                     //Creates new Post object
-                    let newPost = new Post(response.title, response.content, response.imageUrl, response.dateOfPost, response.postingUser.userInfoID);
+                    let newPost = new Post(response.data.title, response.data.content, response.data.imageUrl, response.data.dateOfPost, response.data.postingUser.userInfoID);
 
                     //Bliver den nye efter emil har updated
                     // let newPost = new Post(response.title, response.content, response.imageUrl, response.dateOfPost, response.userId);
@@ -128,7 +124,11 @@ class Blog {
                     
                     //Adds user to data object
                     data.posts[newPost.postId] = newPost;
+
+                    //Runs the callBack function with the result
+                    callBackFunc(data.posts[newPost.Id]);
                 })
+
                 .catch (function (error) {
                     console.log(error);
                 });
@@ -137,22 +137,25 @@ class Blog {
             else if (requestInfo.post) {
                 url += 'posts';
     
-                this.getFromAPI(url)
+                axios.get(url)
                 .then(function (response) {
                     //Adds each post to data object
-                    response.forEach(post => {
-                    //Creates new Post object
-                    let newPost = new Post(post.title, post.content, post.imageUrl, post.dateOfPost, post.postingUser.userInfoID);
+                    response.data.forEach(post => {
+                        //Creates new Post object
+                        let newPost = new Post(post.title, post.content, post.imageUrl, post.dateOfPost, post.postingUser.userInfoID);
 
-                    //Bliver den nye efter emil har updated
-                    // let newPost = new Post(post.title, post.content, post.imageUrl, post.dateOfPost, post.userId);
-                    
-                    //Sets post ID
-                    newPost.postId = post.postId;
-                    
-                    //Adds user to data object
-                    data.posts[newPost.postId] = newPost;
+                        //Bliver den nye efter emil har updated
+                        // let newPost = new Post(post.title, post.content, post.imageUrl, post.dateOfPost, post.userId);
+                        
+                        //Sets post ID
+                        newPost.postId = post.postId;
+                        
+                        //Adds user to data object
+                        data.posts[newPost.postId] = newPost;
                     });
+
+                    //Runs the callBack function with the result
+                    callBackFunc(data.posts);
                 })
                 .catch (function (error) {
                     console.log(error);
@@ -162,13 +165,6 @@ class Blog {
         else {
             console.log('Error in (requestInfo)');
         }
-    }
-
-    getData () {
-        return data;
-
-        //if users, return data.users, osv
-        //users, posts, comments (skal så også have et post ID for at kunne returne)
     }
 }
 

@@ -7,5 +7,6 @@ class User {
         this.numberOfPosts = numberOfPosts;
         this.numberOfComments = numberOfComments;
         this.registerDate = new Date(registerDate);
+        //Posts?
     }
 }

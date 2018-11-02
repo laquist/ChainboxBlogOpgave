@@ -34,19 +34,17 @@ class AdminView {
     updateAuthors (authors) {
         const authorsElement = document.querySelector(DOMstrings.admin.author);
 
+        // const test = authors;
         console.log('authors:');
-        console.log(authors);
+        console.log(authors)
 
-        // console.log(Object.keys(data));
         console.log(Object.keys(authors));
-        // console.log('2')
-        // //Creates an option element with relavant id and text
-        // Object.keys(authors).forEach(key => {
-        //     let newOption = document.createElement('option');
-        //     newOption.text = authors[key].name;
-        //     newOption.id = 'userID-' + authors[key].userInfoID;
-        //     authorsElement.add(newOption);
-        //     console.log('3');
-        // });
+        //Creates an option element with relavant id and text
+        Object.keys(authors).forEach(key => {
+            let newOption = document.createElement('option');
+            newOption.text = authors[key].name;
+            newOption.id = 'userID-' + authors[key].userInfoID;
+            authorsElement.add(newOption);
+        });
     }
 }

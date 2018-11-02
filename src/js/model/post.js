@@ -9,8 +9,3 @@ class Post {
         //comments?
     }
 }
-
-//??????????????
-//syntax for at sætte billeder ind: [img]https://i.imgur.com/sGYuIyO.gif[/img]
-//italics: [i]Le italy[/i]
-//og så videre

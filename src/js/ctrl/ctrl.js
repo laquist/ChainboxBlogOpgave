@@ -20,7 +20,6 @@ class Controller {
         blog.loadData(requestInfo);
     }
 
-    //Updates the author form in admin.html 
     static updateAuthorForm () {
         const requestInfo = {
             user: true,
@@ -31,12 +30,31 @@ class Controller {
 
         //Loads users/authors from API
         // blog.loadData(requestInfo);
-        blog.loadData(requestInfo)
 
-        const data = blog.getData();
+        //Test
+        const dataTest = blog.loadData(requestInfo, adminView.updateAuthors);
 
-        //Sends to view
-        adminView.updateAuthors(data.users);
+        //Gets users
+        // const data = blog.getData();
+
+        //Updates View
+        // adminView.updateAuthors(dataTest);
+    }
+
+    static test () {
+        const requestInfo = {
+            user: false,
+            userId: 0,
+            post: true,
+            postId: 1
+        };
+
+        function testBack (value) {
+            console.log(value)
+        }
+
+        // const dataTest = blog.loadData(requestInfo, testBack);
+        blog.loadData(requestInfo, testBack);
     }
 
     static setupEventListeners () {
