@@ -10,7 +10,7 @@ class Controller {
         
         //Saves (via the API)
         const url = 'https://localhost:44321/api/posts/';
-        // blog.saveData(url, newPost);
+        // dataAccess.saveData(url, newPost);
         //Tjek om response er success eller fejl? Og lav en popup eller andet ved fejl?
         console.log(newPost);
 
@@ -26,7 +26,7 @@ class Controller {
             postId: 0
         };
 
-        blog.loadData(requestInfo, function (value) {
+        dataAccess.loadData(requestInfo, function (value) {
             console.log(value);
         });
     }
@@ -40,7 +40,7 @@ class Controller {
         };
 
         //Loads users/authors from API and calls adminView.updateAuthors() (as callback function)
-        blog.loadData(requestInfo, adminView.updateAuthors);
+        dataAccess.loadData(requestInfo, adminView.updateAuthors);
     }
 
     // static newUserTest () {
@@ -53,7 +53,7 @@ class Controller {
 
     //     const urll = 'https://localhost:44321/api/userinfoes/';
 
-    //     blog.saveData(urll, newUser);
+    //     dataAccess.saveData(urll, newUser);
     // }
 
     // static newPostTest () { // FIX DENNE! GIVER FEJL 400
@@ -63,7 +63,7 @@ class Controller {
 
     //     const urll = 'https://localhost:44321/api/posts/';
 
-    //     blog.saveData(urll, newPost);
+    //     dataAccess.saveData(urll, newPost);
 
     //     //Får en ERROR men den poster stadig til API'en, så den er der når man henter posts igen
     //     // POST https://localhost:44321/api/posts/ net::ERR_SPDY_PROTOCOL_ERROR 200
@@ -109,6 +109,9 @@ class Controller {
 
         //Creates View instances
         view = new View();
+
+        //Creates DataAccess instance
+        dataAccess = new DataAccess();
         
         if (document.URL.includes('index.html')) {
             homeView = new HomeView();
