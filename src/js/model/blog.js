@@ -1,14 +1,9 @@
 class Blog {
-    newPost (info) {
-        // Skal IKKE finde ID. Det får den når man saver til API'en (og har så et ID når du henter fra API'en)
-        // Skal lave ny post
-        // Skal gemme den i data objektet
-        // Skal kalde saveData
+    // newPost (info) {
 
+    // }
 
-    }
-
-    postToAPI (url, data) {
+    saveData (url, data) {
         axios.post(url, data)
         .then(function (response) {
             console.log(response);
@@ -20,6 +15,7 @@ class Blog {
         });
     }
     
+    //Tjek denne, når den laver nye objekter. User, Post, Comment. Har lavet om i mange constructors
     loadData (requestInfo, callBackFunc) {
         let url = 'https://localhost:44321/api/';
         let error = false;
@@ -67,10 +63,10 @@ class Blog {
                 axios.get(url)
                 .then(function (response) {
                     //Creates new User object
-                    let newUser = new User(response.data.userInfoID, response.data.name, response.data.username, response.data.profilFictureUrl, response.data.numberOfPosts, response.data.numberOfComments, response.data.registerDate);
+                    let newUser = new User(response.data.name, response.data.username, response.data.profilPictureUrl, response.data.numberOfPosts, response.data.numberOfComments, response.data.registerDate);
 
                     //Sets user ID
-                    newUser.userId = response.userInfoID;
+                    newUser.userId = response.data.userInfoID;
                     
                     //Adds user to data object
                     data.users[newUser.userId] = newUser;
@@ -91,13 +87,13 @@ class Blog {
                     //Adds each user to data object
                     response.data.forEach(user => {
                         //Creates new User object
-                        let newUser = new User(user.userInfoID, user.name, user.username, user.profilPictureUrl, user.numberOfPosts, user.numberOfComments, user.registerDate);
+                        let newUser = new User(user.name, user.username, user.profilPictureUrl, user.numberOfPosts, user.numberOfComments, user.registerDate);
 
                         //Sets user ID
-                        newUser.userId = user.userInfoID;
+                        newUser.userInfoID = user.userInfoID;
                         
                         //Adds user to data object
-                        data.users[newUser.userId] = newUser;
+                        data.users[newUser.userInfoID] = newUser;
                     });
 
                     //Runs the callBack function with the result

@@ -1,12 +1,21 @@
 let blog, view, homeView, postView, adminView;
 
 class Controller {
-    static newPost() {
+    static newPost() { //Mangler at save til API
         //Gets info from view
         const info = adminView.getInfo();
 
-        //
+        //Creates new Post
+        const newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId);
+        
+        //Saves (via the API)
+        const url = 'https://localhost:44321/api/posts/';
+        // blog.saveData(url, newPost);
+        //Tjek om response er success eller fejl? Og lav en popup eller andet ved fejl?
+        console.log(newPost);
 
+        //Clears fields
+        adminView.clearFields();
     }
 
     static updateAllPosts () {
@@ -17,7 +26,9 @@ class Controller {
             postId: 0
         };
 
-        blog.loadData(requestInfo);
+        blog.loadData(requestInfo, function (value) {
+            console.log(value);
+        });
     }
 
     static updateAuthorForm () {
@@ -28,34 +39,35 @@ class Controller {
             postId: 0
         };
 
-        //Loads users/authors from API
-        // blog.loadData(requestInfo);
-
-        //Test
-        const dataTest = blog.loadData(requestInfo, adminView.updateAuthors);
-
-        //Gets users
-        // const data = blog.getData();
-
-        //Updates View
-        // adminView.updateAuthors(dataTest);
+        //Loads users/authors from API and calls adminView.updateAuthors() (as callback function)
+        blog.loadData(requestInfo, adminView.updateAuthors);
     }
 
-    static test () {
-        const requestInfo = {
-            user: false,
-            userId: 0,
-            post: true,
-            postId: 1
-        };
+    // static newUserTest () {
+    //     // let newUser = new User(2, 'John', 'JohnnyBoy', 'john.jpg', 2, 4, "2018-10-25T00:00:00");
+    //     let newUser = new User('John', 'JohnnyBoy', 'john.jpg', 2, 4, new Date(), null, null);
+    //     console.log('newUser:')
+    //     console.log(newUser);
+    //     // console.log(JSON.stringify(newUser));
 
-        function testBack (value) {
-            console.log(value)
-        }
 
-        // const dataTest = blog.loadData(requestInfo, testBack);
-        blog.loadData(requestInfo, testBack);
-    }
+    //     const urll = 'https://localhost:44321/api/userinfoes/';
+
+    //     blog.saveData(urll, newUser);
+    // }
+
+    // static newPostTest () { // FIX DENNE! GIVER FEJL 400
+    //     let newPost = new Post('Titel1', 'Content1', 'hejIgen.jpg', new Date(), data.users[1], new Comment(2, data.users[1], this, 'Comment Content', new Date()));
+    //     console.log('newPost:');
+    //     console.log(newPost);
+
+    //     const urll = 'https://localhost:44321/api/posts/';
+
+    //     blog.saveData(urll, newPost);
+
+    //     //Får en ERROR men den poster stadig til API'en, så den er der når man henter posts igen
+    //     // POST https://localhost:44321/api/posts/ net::ERR_SPDY_PROTOCOL_ERROR 200
+    // }
 
     static setupEventListeners () {
         const DOMstrings = view.getDOMstrings();

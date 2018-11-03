@@ -10,9 +10,10 @@ class AdminView {
         && document.querySelector(DOMstrings.admin.image).textContent !== 'No image chosen'
         ) {
             info.title = document.querySelector(DOMstrings.admin.title).value;
-            info.author = document.querySelector(DOMstrings.admin.author).value; //Skal få dens options elements ID
+            // info.authorId = document.querySelector(DOMstrings.admin.author).options[document.querySelector(DOMstrings.admin.author).selectedIndex].id; //Skal få dens options elements ID
+            info.authorId = document.querySelector(DOMstrings.admin.author).options[document.querySelector(DOMstrings.admin.author).selectedIndex].id.split('userID-')[1]; //Skal få dens options elements ID
             info.content = document.querySelector(DOMstrings.admin.content).value;
-            info.image = document.querySelector(DOMstrings.admin.image).textContent; //Validate url?
+            info.imageUrl = document.querySelector(DOMstrings.admin.image).textContent;
         }
         else {
             //ERROR
@@ -34,11 +35,6 @@ class AdminView {
     updateAuthors (authors) {
         const authorsElement = document.querySelector(DOMstrings.admin.author);
 
-        // const test = authors;
-        console.log('authors:');
-        console.log(authors)
-
-        console.log(Object.keys(authors));
         //Creates an option element with relavant id and text
         Object.keys(authors).forEach(key => {
             let newOption = document.createElement('option');

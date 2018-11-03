@@ -1,10 +1,9 @@
 class Comment {
-    constructor (commentId, userId, author, profilePicture, content, date) {
+    constructor (commentId, commentingUser, post, content, dateOfComment) {
         this.commentId = commentId;
-        this.userId = userId;
-        this.author = author;
-        this.profilePicture = profilePicture;
+        this.commentingUser = commentingUser;
+        this.post = post;
         this.content = content;
-        this.date = date;
+        this.dateOfComment = dateOfComment;
     }
 }
