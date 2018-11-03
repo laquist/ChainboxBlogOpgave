@@ -3,8 +3,3 @@ class Blog {
 
     // }
 }
-
-let data = {
-    users: {},
-    posts: {}
-};

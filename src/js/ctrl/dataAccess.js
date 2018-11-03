@@ -1,18 +1,78 @@
 class DataAccess {
-    saveData (url, data) {
-        axios.post(url, data)
-        .then(function (response) {
-            console.log(response);
-            console.log('Successfully saved')
-        })
-        .catch(function (error) {
-            console.log(error);
-            console.log('Error while saving')
-        });
+    //Load all users
+    static loadAllUsers (callBackFunc) {
+        const requestInfo = {
+            user: true,
+            userId: 0,
+            post: false,
+            postId: 0
+        };
+
+        DataAccess.loadData(requestInfo, callBackFunc);
     }
-    
+
+    //Load specific user
+    static loadUser (id, callBackFunc) {
+        const requestInfo = {
+            user: true,
+            userId: id,
+            post: false,
+            postId: 0
+        };
+
+        DataAccess.loadData(requestInfo, callBackFunc);
+    }
+
+    //Load all posts
+    static loadAllPosts (callBackFunc) {
+        const requestInfo = {
+            user: false,
+            userId: 0,
+            post: true,
+            postId: 0
+        };
+
+        DataAccess.loadData(requestInfo, callBackFunc);
+    }
+
+    //Load specific post
+    static loadPost (id, callBackFunc) {
+        const requestInfo = {
+            user: false,
+            userId: 0,
+            post: true,
+            postId: id
+        };
+
+        DataAccess.loadData(requestInfo, callBackFunc);
+    }
+
+    //Load all posts from user
+    static loadUserPosts (id, callBackFunc) {
+        const requestInfo = {
+            user: true,
+            userId: id,
+            post: true,
+            postId: 0
+        };
+
+        DataAccess.loadData(requestInfo, callBackFunc);
+    }
+
+    //Load specific post from user
+    static loadUserPost (userIdParam, postIdParam, callBackFunc) {
+        const requestInfo = {
+            user: false,
+            userId: userIdParam,
+            post: true,
+            postId: postIdParam
+        };
+
+        DataAccess.loadData(requestInfo, callBackFunc);
+    }
+
     //Tjek denne, når den laver nye objekter. User, Post, Comment. Har lavet om i mange constructors
-    loadData (requestInfo, callBackFunc) {
+    static loadData (requestInfo, callBackFunc) {
         let url = 'https://localhost:44321/api/';
         let error = false;
         let answer;
@@ -158,4 +218,34 @@ class DataAccess {
             console.log('Error in (requestInfo)');
         }
     }
+
+    static savePost (post) {
+        const url = 'https://localhost:44321/api/posts/';
+
+        DataAccess.saveData(url, post);
+    }
+
+    static saveUser (user) {
+        const url = 'https://localhost:44321/api/userinfoes/';
+
+        DataAccess.saveData(url, user);
+    }
+
+    //Tjek om response er success eller fejl? Og lav en popup eller andet ved fejl?
+    static saveData (url, data) {
+        axios.post(url, data)
+        .then(function (response) {
+            console.log(response);
+            console.log('Successfully saved')
+        })
+        .catch(function (error) {
+            console.log(error);
+            console.log('Error while saving')
+        });
+    }
 }
+
+let data = {
+    users: {},
+    posts: {}
+};

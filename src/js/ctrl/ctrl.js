@@ -9,38 +9,21 @@ class Controller {
         const newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId);
         
         //Saves (via the API)
-        const url = 'https://localhost:44321/api/posts/';
-        // dataAccess.saveData(url, newPost);
-        //Tjek om response er success eller fejl? Og lav en popup eller andet ved fejl?
-        console.log(newPost);
+        DataAccess.savePost(newPost);
 
         //Clears fields
         adminView.clearFields();
     }
 
     static updateAllPosts () {
-        const requestInfo = {
-            user: false,
-            userId: 0,
-            post: true,
-            postId: 0
-        };
-
-        dataAccess.loadData(requestInfo, function (value) {
+        DataAccess.loadAllPosts(requestInfo, function (value) {
             console.log(value);
         });
     }
 
     static updateAuthorForm () {
-        const requestInfo = {
-            user: true,
-            userId: 0,
-            post: false,
-            postId: 0
-        };
-
         //Loads users/authors from API and calls adminView.updateAuthors() (as callback function)
-        dataAccess.loadData(requestInfo, adminView.updateAuthors);
+        DataAccess.loadAllUsers(requestInfo, adminView.updateAuthors);
     }
 
     // static newUserTest () {
@@ -103,15 +86,12 @@ class Controller {
         }
     }
     
-    static initialize () {        
+    static initialize () {
         //Creates Blog instance
         blog = new Blog();
 
         //Creates View instances
         view = new View();
-
-        //Creates DataAccess instance
-        dataAccess = new DataAccess();
         
         if (document.URL.includes('index.html')) {
             homeView = new HomeView();
