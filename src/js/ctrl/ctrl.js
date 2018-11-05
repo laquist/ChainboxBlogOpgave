@@ -1,7 +1,7 @@
 let blog, view, homeView, postView, adminView;
 
 class Controller {
-    static newPost() { //Mangler at save til API
+    static newPost () { //Mangler at save til API
         //Gets info from view
         const info = adminView.getInfo();
 
@@ -15,48 +15,54 @@ class Controller {
         adminView.clearFields();
     }
 
-    static updateAllPosts () {
-        DataAccess.loadAllPosts(requestInfo, function (value) {
-            console.log(value);
-        });
+    // static newUser () {
+    //     //Gets info from view
+    //     //const newUser = GET USER SOMEWHERE FROM
+
+    //     //TEMP
+    //     //let newUser = new User('John', 'JohnnyBoy', 'john.jpg', 2, 4, new Date());
+
+    //     //Saves (via the API)
+    //     DataAccess.saveUser(newUser);
+    // }
+
+    static displayPosts () {
+        //Loads posts from API and calls the callback function, to insert post on the page
+        DataAccess.loadAllPosts(homeView.displayPosts);
+    }
+
+    static displayPost (id) {
+        DataAccess.loadPost(id, postView.displayPost);
     }
 
     static updateAuthorForm () {
         //Loads users/authors from API and calls adminView.updateAuthors() (as callback function)
-        DataAccess.loadAllUsers(requestInfo, adminView.updateAuthors);
+        DataAccess.loadAllUsers(adminView.updateAuthors);
     }
-
-    // static newUserTest () {
-    //     // let newUser = new User(2, 'John', 'JohnnyBoy', 'john.jpg', 2, 4, "2018-10-25T00:00:00");
-    //     let newUser = new User('John', 'JohnnyBoy', 'john.jpg', 2, 4, new Date(), null, null);
-    //     console.log('newUser:')
-    //     console.log(newUser);
-    //     // console.log(JSON.stringify(newUser));
-
-
-    //     const urll = 'https://localhost:44321/api/userinfoes/';
-
-    //     dataAccess.saveData(urll, newUser);
-    // }
-
-    // static newPostTest () { // FIX DENNE! GIVER FEJL 400
-    //     let newPost = new Post('Titel1', 'Content1', 'hejIgen.jpg', new Date(), data.users[1], new Comment(2, data.users[1], this, 'Comment Content', new Date()));
-    //     console.log('newPost:');
-    //     console.log(newPost);
-
-    //     const urll = 'https://localhost:44321/api/posts/';
-
-    //     dataAccess.saveData(urll, newPost);
-
-    //     //Får en ERROR men den poster stadig til API'en, så den er der når man henter posts igen
-    //     // POST https://localhost:44321/api/posts/ net::ERR_SPDY_PROTOCOL_ERROR 200
-    // }
 
     static setupEventListeners () {
         const DOMstrings = view.getDOMstrings();
 
         if (document.URL.includes('index.html')) {
-            //Skal loade posts til forsiden
+            //Page load
+            window.addEventListener('load', function () {
+                //Loads post previews to index.html
+                Controller.displayPosts();
+            });
+
+            //Make blog posts clickable
+            const postLinks = document.querySelectorAll(DOMstrings.home.postLink);
+
+            postLinks.forEach(postLink => {
+                postLink.addEventListener('click', function (event) {
+                    const postID = event.target.closest('article').id.split('postID-')[1];
+    
+                    Controller.displayPost(postID);
+                });
+            });
+
+            // const navLink
+            // EventListener til click på en post, EventListener til click på nav (og skift af classen actice)
         }
         else if (document.URL.includes('post.html')) {
             //Skal loade en post til post.html siden
@@ -70,6 +76,7 @@ class Controller {
             //'Chose Image' button
             document.querySelector(DOMstrings.admin.imageBtn).addEventListener('click', function () {
                 let imgURL = prompt("Please enter the image URL");
+                console.log(imgURL);
         
                 if (imgURL) {
                     document.querySelector(DOMstrings.admin.image).textContent = imgURL;

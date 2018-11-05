@@ -37,10 +37,27 @@ class AdminView {
 
         //Creates an option element with relavant id and text
         Object.keys(authors).forEach(key => {
+            // if (option) {
+
+            // }
+
             let newOption = document.createElement('option');
             newOption.text = authors[key].name;
             newOption.id = 'userID-' + authors[key].userInfoID;
             authorsElement.add(newOption);
         });
+    }
+
+    checkForExistingElement (id) {
+        const options = document.querySelector(DOMstrings.admin.author).options;
+        let elementExists = false;
+
+        options.forEach(option => {
+            if (option.id === id) {
+                elementExists = true;
+            }
+        });
+
+        return elementExists;
     }
 }

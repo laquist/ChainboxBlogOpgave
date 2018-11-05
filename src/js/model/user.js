@@ -1,13 +1,10 @@
 class User {
-    constructor (name, username, profilPictureUrl, numberOfPosts, numberOfComments, registerDate, posts, comments) {
-        // this.userInfoID = userInfoID;
+    constructor (name, userName, profilPictureUrl, numberOfPosts, numberOfComments, registerDate) {
         this.name = name;
-        this.username = username;
+        this.userName = userName; //Caps sensitive? Var username før
         this.profilPictureUrl = profilPictureUrl;
         this.numberOfPosts = numberOfPosts;
         this.numberOfComments = numberOfComments;
         this.registerDate = new Date(registerDate);
-        this.posts = posts;
-        this.comments = comments;
     }
 }

@@ -6,10 +6,15 @@ class View {
 
 let DOMstrings = {
     home: {
-
+        articleContainer: '#articleContainer',
+        postLink: '.postLink'
     },
     post: {
-
+        headerImgContainer: '#headerImgContainer',
+        articleContainer: '#contentContainer',
+        date: '#postDate',
+        title: '#postTitle',
+        author: '#postAuthor'
     },
     admin: {
         title: '#titleInput',
@@ -18,6 +23,8 @@ let DOMstrings = {
         content: '#contentInput',
         image: '#imageInput',
         imageBtn: '#imageInputBtn',
-        publishBtn: '#publishBtn'
+        publishBtn: '#publishBtn',
     }
 };
+
+let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];

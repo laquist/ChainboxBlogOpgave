@@ -82,35 +82,19 @@ class DataAccess {
         && typeof(requestInfo.post) === "boolean"
         && Number.isInteger(requestInfo.userId)
         && Number.isInteger(requestInfo.postId)){
-            //Specific post from specific user
+            //Specific post from specific user - Not available
             if (requestInfo.user && requestInfo.post && requestInfo.userId != 0 && requestInfo.postId != 0) {
                 url += 'userinfoes/' + requestInfo.userId + '/posts/' + requestInfo.postId;
     
                 //Not available in API atm
                 console.log('Out of service')
-    
-                // this.getFromAPI(url)
-                // .then(function (response) {
-                //     // Do stuff
-                // })
-                // .catch (function (error) {
-                //     console.log(error);
-                // });
             }
-            //All posts from specific user
+            //All posts from specific user - Not available
             else if (requestInfo.user && requestInfo.post && requestInfo.userId != 0) {
                 url += 'userinfoes' + requestInfo.userId + '/posts';
     
                 //Not available in API atm
                 console.log('Out of service')
-    
-                // this.getFromAPI(url)
-                // .then(function (response) {
-                //     // Do stuff
-                // })
-                // .catch (function (error) {
-                //     console.log(error);
-                // });
             }
             //Specific user
             else if (requestInfo.user && requestInfo.userId != 0) {
@@ -122,7 +106,7 @@ class DataAccess {
                     let newUser = new User(response.data.name, response.data.username, response.data.profilPictureUrl, response.data.numberOfPosts, response.data.numberOfComments, response.data.registerDate);
 
                     //Sets user ID
-                    newUser.userId = response.data.userInfoID;
+                    newUser.userInfoID = response.data.userInfoID;
                     
                     //Adds user to data object
                     data.users[newUser.userId] = newUser;
@@ -165,20 +149,23 @@ class DataAccess {
     
                 axios.get(url)
                 .then(function (response) {
-                    //Creates new Post object
-                    let newPost = new Post(response.data.title, response.data.content, response.data.imageUrl, response.data.dateOfPost, response.data.postingUser.userInfoID);
+                    //Creates User object
+                    const postingUser = new User(response.data.name, response.data.username, response.data.profilPictureUrl, response.data.numberOfPosts, response.data.numberOfComments, response.data.registerDate);
 
-                    //Bliver den nye efter emil har updated
-                    // let newPost = new Post(response.title, response.content, response.imageUrl, response.dateOfPost, response.userId);
+                    //Sets user ID
+                    postingUser.userInfoID = response.data.userInfoID;
+                    
+                    //Creates new Post object
+                    let newPost = new Post(response.data.title, response.data.content, response.data.imageUrl, response.data.dateOfPost, response.data.postingUserID, postingUser);
                     
                     //Sets post ID
-                    newPost.postId = response.postId;
+                    newPost.postId = response.data.postId;
                     
                     //Adds user to data object
                     data.posts[newPost.postId] = newPost;
 
                     //Runs the callBack function with the result
-                    callBackFunc(data.posts[newPost.Id]);
+                    callBackFunc(data.posts[newPost.postId]);
                 })
 
                 .catch (function (error) {
@@ -193,12 +180,15 @@ class DataAccess {
                 .then(function (response) {
                     //Adds each post to data object
                     response.data.forEach(post => {
-                        //Creates new Post object
-                        let newPost = new Post(post.title, post.content, post.imageUrl, post.dateOfPost, post.postingUser.userInfoID);
-
-                        //Bliver den nye efter emil har updated
-                        // let newPost = new Post(post.title, post.content, post.imageUrl, post.dateOfPost, post.userId);
+                        //Creates User object
+                        const postingUser = new User(post.postingUser.name, post.postingUser.username, post.postingUser.profilPictureUrl, post.postingUser.numberOfPosts, post.postingUser.numberOfComments, post.postingUser.registerDate);
                         
+                        //Sets user ID
+                        postingUser.userInfoID = post.postingUser.userInfoID;
+
+                        //Creates new Post object
+                        let newPost = new Post(post.title, post.content, post.imageUrl, new Date(post.dateOfPost), post.postingUserID, postingUser);
+
                         //Sets post ID
                         newPost.postId = post.postId;
                         
@@ -235,7 +225,7 @@ class DataAccess {
     static saveData (url, data) {
         axios.post(url, data)
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
             console.log('Successfully saved')
         })
         .catch(function (error) {
