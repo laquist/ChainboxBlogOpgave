@@ -15,7 +15,7 @@ class DataAccess {
     static loadUser (id, callBackFunc) {
         const requestInfo = {
             user: true,
-            userId: id,
+            userId: parseInt(id),
             post: false,
             postId: 0
         };
@@ -41,7 +41,7 @@ class DataAccess {
             user: false,
             userId: 0,
             post: true,
-            postId: id
+            postId: parseInt(id)
         };
 
         DataAccess.loadData(requestInfo, callBackFunc);
@@ -51,7 +51,7 @@ class DataAccess {
     static loadUserPosts (id, callBackFunc) {
         const requestInfo = {
             user: true,
-            userId: id,
+            userId: parseInt(id),
             post: true,
             postId: 0
         };
@@ -74,8 +74,6 @@ class DataAccess {
     //Tjek denne, når den laver nye objekter. User, Post, Comment. Har lavet om i mange constructors
     static loadData (requestInfo, callBackFunc) {
         let url = 'https://localhost:44321/api/';
-        let error = false;
-        let answer;
 
         //Validates requestInfo
         if(typeof(requestInfo.user) === "boolean" 
@@ -150,13 +148,13 @@ class DataAccess {
                 axios.get(url)
                 .then(function (response) {
                     //Creates User object
-                    const postingUser = new User(response.data.name, response.data.username, response.data.profilPictureUrl, response.data.numberOfPosts, response.data.numberOfComments, response.data.registerDate);
+                    const postingUser = new User(response.data.postingUser.name, response.data.postingUser.username, response.data.postingUser.profilPictureUrl, response.data.postingUser.numberOfPosts, response.data.postingUser.numberOfComments, response.data.postingUser.registerDate);
 
                     //Sets user ID
                     postingUser.userInfoID = response.data.userInfoID;
                     
                     //Creates new Post object
-                    let newPost = new Post(response.data.title, response.data.content, response.data.imageUrl, response.data.dateOfPost, response.data.postingUserID, postingUser);
+                    let newPost = new Post(response.data.title, response.data.content, response.data.imageUrl, new Date(response.data.dateOfPost), response.data.postingUserID, postingUser);
                     
                     //Sets post ID
                     newPost.postId = response.data.postId;

@@ -6,7 +6,8 @@ class Controller {
         const info = adminView.getInfo();
 
         //Creates new Post
-        const newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId);
+        // onst newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId);
+        const newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId, data.users[authorId]); 
         
         //Saves (via the API)
         DataAccess.savePost(newPost);
@@ -48,6 +49,8 @@ class Controller {
             window.addEventListener('load', function () {
                 //Loads post previews to index.html
                 Controller.displayPosts();
+
+                sessionStorage.setItem('postID', 0);
             });
 
             //Make blog posts clickable
@@ -57,15 +60,29 @@ class Controller {
                 postLink.addEventListener('click', function (event) {
                     const postID = event.target.closest('article').id.split('postID-')[1];
     
-                    Controller.displayPost(postID);
+                    //Saves the clicked post's ID to sessionStorage, to use it when post.html loads
+                    sessionStorage.setItem('postID', postID);
+
+                    //Changes page to post.html
+                    document.location = '/post.html';
                 });
             });
 
-            // const navLink
             // EventListener til click på en post, EventListener til click på nav (og skift af classen actice)
         }
         else if (document.URL.includes('post.html')) {
-            //Skal loade en post til post.html siden
+            window.addEventListener('load', function () {
+                //Gets the postID from sessionStorage
+                const postID = sessionStorage.getItem('postID');
+
+                //
+                if (postID !== 0) {
+                    Controller.displayPost(postID);
+                }
+                else {
+                    console.log('ERROR with loading postID from SessionStorage');
+                }
+            });
         }
         else if (document.URL.includes('admin.html')) {
             //'Publish' button
@@ -99,16 +116,20 @@ class Controller {
 
         //Creates View instances
         view = new View();
+
+        homeView = new HomeView();
+        postView = new PostView();
+        adminView = new AdminView();
         
-        if (document.URL.includes('index.html')) {
-            homeView = new HomeView();
-        }
-        else if (document.URL.includes('post.html')) {
-            postView = new PostView();
-        }
-        else if (document.URL.includes('admin.html')) {
-            adminView = new AdminView();
-        }
+        // if (document.URL.includes('index.html')) {
+        //     homeView = new HomeView();
+        // }
+        // else if (document.URL.includes('post.html')) {
+        //     postView = new PostView();
+        // }
+        // else if (document.URL.includes('admin.html')) {
+        //     adminView = new AdminView();
+        // }
 
         //Adds EventListeners
         Controller.setupEventListeners();

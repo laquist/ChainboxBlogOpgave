@@ -11,7 +11,7 @@ let DOMstrings = {
     },
     post: {
         headerImgContainer: '#headerImgContainer',
-        articleContainer: '#contentContainer',
+        contentContainer: '#contentContainer',
         date: '#postDate',
         title: '#postTitle',
         author: '#postAuthor'
