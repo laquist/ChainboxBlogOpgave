@@ -1,12 +1,11 @@
 let blog, view, homeView, postView, adminView;
 
 class Controller {
-    static newPost () { //Mangler at save til API
+    static newPost () {
         //Gets info from view
         const info = adminView.getInfo();
 
         //Creates new Post
-        // onst newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId);
         const newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId, data.users[authorId]); 
         
         //Saves (via the API)
@@ -116,20 +115,9 @@ class Controller {
 
         //Creates View instances
         view = new View();
-
         homeView = new HomeView();
         postView = new PostView();
         adminView = new AdminView();
-        
-        // if (document.URL.includes('index.html')) {
-        //     homeView = new HomeView();
-        // }
-        // else if (document.URL.includes('post.html')) {
-        //     postView = new PostView();
-        // }
-        // else if (document.URL.includes('admin.html')) {
-        //     adminView = new AdminView();
-        // }
 
         //Adds EventListeners
         Controller.setupEventListeners();

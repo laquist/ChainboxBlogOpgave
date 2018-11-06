@@ -23,7 +23,7 @@ class HomeView {
             //Inserts on page
             articleContainer.insertAdjacentHTML('beforeend', html)
 
-            //TEST
+            //TEST (Den skal lave nye eventlisteners når nye posts er blevet sat ind. Enten skal jeg ændre noget mht. callbacks, eller kalde den herfra. Måske en metode her til at tilføje eventlistener til alle posts? Måske bare nye posts? En specifik post?)
             Controller.setupEventListeners();
         });
     }

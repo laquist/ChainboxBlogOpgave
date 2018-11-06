@@ -12,10 +12,10 @@ class DataAccess {
     }
 
     //Load specific user
-    static loadUser (id, callBackFunc) {
+    static loadUser (userID, callBackFunc) {
         const requestInfo = {
             user: true,
-            userId: parseInt(id),
+            userId: parseInt(userID),
             post: false,
             postId: 0
         };
@@ -36,22 +36,22 @@ class DataAccess {
     }
 
     //Load specific post
-    static loadPost (id, callBackFunc) {
+    static loadPost (postID, callBackFunc) {
         const requestInfo = {
             user: false,
             userId: 0,
             post: true,
-            postId: parseInt(id)
+            postId: parseInt(postID)
         };
 
         DataAccess.loadData(requestInfo, callBackFunc);
     }
 
     //Load all posts from user
-    static loadUserPosts (id, callBackFunc) {
+    static loadUserPosts (userID, callBackFunc) {
         const requestInfo = {
             user: true,
-            userId: parseInt(id),
+            userId: parseInt(userID),
             post: true,
             postId: 0
         };
@@ -60,23 +60,55 @@ class DataAccess {
     }
 
     //Load specific post from user
-    static loadUserPost (userIdParam, postIdParam, callBackFunc) {
+    static loadUserPost (userID, postID, callBackFunc) {
         const requestInfo = {
             user: false,
-            userId: userIdParam,
+            userId: parseInt(userID),
             post: true,
-            postId: postIdParam
+            postId: parseInt(postID)
         };
 
         DataAccess.loadData(requestInfo, callBackFunc);
     }
 
+    //Load all comments (From all posts)
+    static loadAllComments (callBackFunc) {
+        
+    }
+    
+    //Load specific comment
+    static loadComment (commentID, callBackFunc) {
+
+    }
+    
+    //Load all comments from specific post
+    static loadPostComments (postID, callBackFunc) {
+        const requestInfo = {
+            user: true,
+            userId: 0,
+            post: true,
+            postId: 0,
+            comment: true,
+            commentId: 0
+        };
+    }
+
+    //Load all comments from specific user
+    static loadUserComments (userID, callBackFunc) {
+
+    }
+
+
     //Tjek denne, når den laver nye objekter. User, Post, Comment. Har lavet om i mange constructors
     static loadData (requestInfo, callBackFunc) {
         let url = 'https://localhost:44321/api/';
 
+        //Comments
+        if (requestInfo.hasOwnProperty('comment')) {
+            
+        }
         //Validates requestInfo
-        if(typeof(requestInfo.user) === "boolean" 
+        else if (typeof(requestInfo.user) === "boolean" 
         && typeof(requestInfo.post) === "boolean"
         && Number.isInteger(requestInfo.userId)
         && Number.isInteger(requestInfo.postId)){
@@ -203,7 +235,7 @@ class DataAccess {
             }
         }
         else {
-            console.log('Error in (requestInfo)');
+            console.log('Error in (requestInfo) types');
         }
     }
 
