@@ -27,12 +27,42 @@ class Controller {
     // }
 
     static displayPosts () {
-        //Loads posts from API and calls the callback function, to insert post on the page
+        //Loads posts from API and calls the callback function, to insert posts on the page
         DataAccess.loadAllPosts(homeView.displayPosts);
     }
 
-    static displayPost (id) {
-        DataAccess.loadPost(id, postView.displayPost);
+    static displayPost (postID) {
+        //Loads post from API and calls the callback function, to insert post on the page
+        DataAccess.loadPost(postID, postView.displayPost);
+    }
+
+    static displayComments(postID) {
+        //Loads comments from specfic post from API and calls the callback function, to insert comments on page
+        DataAccess.loadPostComments(postID, postView.displayComments);
+    }
+
+    //Temp?
+    static getAllComments() {
+        DataAccess.loadAllComments(Controller.print);
+    }
+
+    //Temp?
+    static getAllPosts() {
+        DataAccess.loadAllPosts(Controller.print);
+    }
+
+    //Temp?
+    static getAllUsers() {
+        DataAccess.loadAllUsers(Controller.print);
+    }
+
+    static test () {
+        DataAccess.loadPostComments(4, Controller.print);
+    }
+
+    //TEMP
+    static print (input) {
+        console.log(input);
     }
 
     static updateAuthorForm () {
@@ -74,9 +104,9 @@ class Controller {
                 //Gets the postID from sessionStorage
                 const postID = sessionStorage.getItem('postID');
 
-                //
                 if (postID !== 0) {
                     Controller.displayPost(postID);
+                    Controller.displayComments(postID);
                 }
                 else {
                     console.log('ERROR with loading postID from SessionStorage');

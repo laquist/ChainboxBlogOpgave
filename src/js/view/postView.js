@@ -23,16 +23,33 @@ class PostView {
         `;
         
         contentContainer.insertAdjacentHTML('beforeend', contentHTML);
-
-        //Adds comments
-        // this.displayComments(post.comments);
     }
     
     displayComments (comments) {
+        //Test
+        // console.log(comments);
+        const commentContainer = document.querySelector(DOMstrings.post.commentContainer);
+        
+        if (comments.length !== 0) {
+            Object.keys(comments).forEach(commentKey => {
+                const comment = comments[commentKey];
 
-    }
+                //Creates HTML
+                const html = `
+                <article class="d-flex mb-5" id="${comment.commentId}">
+                <img src="${comment.commentingUser.profilPictureUrl}" alt="${comment.commentingUser.name}">
+                
+              
+                    <div class="d-flex flex-column justify-content-between py-1 ml-4">
+                        <p class="m-0 font-weight-bold" id="commentAuthor">${comment.commentingUser.name}</p>
+                        <p class="m-0" id="commentContent">${comment.content}</p>
+                        <a class="commentReply"><p class="m-0 text-muted">Svar</p></a>
+                    </div>
+                </article>
+                `;
 
-    saveComments (comments) {
-        this.comments = comments;
+                commentContainer.insertAdjacentHTML('beforeend', html);
+            });
+        }
     }
 }

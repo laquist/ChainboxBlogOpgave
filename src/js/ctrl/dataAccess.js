@@ -5,7 +5,9 @@ class DataAccess {
             user: true,
             userId: 0,
             post: false,
-            postId: 0
+            postId: 0,
+            comment: false,
+            commentId: 0
         };
 
         DataAccess.loadData(requestInfo, callBackFunc);
@@ -17,7 +19,9 @@ class DataAccess {
             user: true,
             userId: parseInt(userID),
             post: false,
-            postId: 0
+            postId: 0,
+            comment: false,
+            commentId: 0
         };
 
         DataAccess.loadData(requestInfo, callBackFunc);
@@ -29,7 +33,9 @@ class DataAccess {
             user: false,
             userId: 0,
             post: true,
-            postId: 0
+            postId: 0,
+            comment: false,
+            commentId: 0
         };
 
         DataAccess.loadData(requestInfo, callBackFunc);
@@ -41,7 +47,9 @@ class DataAccess {
             user: false,
             userId: 0,
             post: true,
-            postId: parseInt(postID)
+            postId: parseInt(postID),
+            comment: false,
+            commentId: 0
         };
 
         DataAccess.loadData(requestInfo, callBackFunc);
@@ -53,7 +61,9 @@ class DataAccess {
             user: true,
             userId: parseInt(userID),
             post: true,
-            postId: 0
+            postId: 0,
+            comment: false,
+            commentId: 0
         };
 
         DataAccess.loadData(requestInfo, callBackFunc);
@@ -65,7 +75,9 @@ class DataAccess {
             user: false,
             userId: parseInt(userID),
             post: true,
-            postId: parseInt(postID)
+            postId: parseInt(postID),
+            comment: false,
+            commentId: 0
         };
 
         DataAccess.loadData(requestInfo, callBackFunc);
@@ -73,58 +85,83 @@ class DataAccess {
 
     //Load all comments (From all posts)
     static loadAllComments (callBackFunc) {
-        
+        const requestInfo = {
+            user: false,
+            userId: 0,
+            post: false,
+            postId: 0,
+            comment: true,
+            commentId: 0
+        };
+
+        DataAccess.loadData(requestInfo, callBackFunc);
     }
     
     //Load specific comment
     static loadComment (commentID, callBackFunc) {
+        const requestInfo = {
+            user: false,
+            userId: 0,
+            post: false,
+            postId: 0,
+            comment: true,
+            commentId: parseInt(commentID)
+        };
 
+        DataAccess.loadData(requestInfo, callBackFunc);
     }
     
     //Load all comments from specific post
     static loadPostComments (postID, callBackFunc) {
         const requestInfo = {
-            user: true,
+            user: false,
             userId: 0,
             post: true,
-            postId: 0,
+            postId: parseInt(postID),
             comment: true,
             commentId: 0
         };
+
+        DataAccess.loadData(requestInfo, callBackFunc);
     }
 
     //Load all comments from specific user
     static loadUserComments (userID, callBackFunc) {
+        const requestInfo = {
+            user: true,
+            userId: parseInt(userID),
+            post: false,
+            postId: 0,
+            comment: true,
+            commentId: 0
+        };
 
+        DataAccess.loadData(requestInfo, callBackFunc);
     }
 
-
-    //Tjek denne, når den laver nye objekter. User, Post, Comment. Har lavet om i mange constructors
     static loadData (requestInfo, callBackFunc) {
         let url = 'https://localhost:44321/api/';
 
-        //Comments
-        if (requestInfo.hasOwnProperty('comment')) {
-            
-        }
         //Validates requestInfo
-        else if (typeof(requestInfo.user) === "boolean" 
-        && typeof(requestInfo.post) === "boolean"
+        if (typeof(requestInfo.user) === 'boolean'
+        && typeof(requestInfo.post) === 'boolean'
+        && typeof(requestInfo.comment === 'boolean')
         && Number.isInteger(requestInfo.userId)
-        && Number.isInteger(requestInfo.postId)){
-            //Specific post from specific user - Not available
-            if (requestInfo.user && requestInfo.post && requestInfo.userId != 0 && requestInfo.postId != 0) {
-                url += 'userinfoes/' + requestInfo.userId + '/posts/' + requestInfo.postId;
-    
-                //Not available in API atm
-                console.log('Out of service')
-            }
+        && Number.isInteger(requestInfo.postId)
+        && Number.isInteger(requestInfo.commentId)
+        ){
             //All posts from specific user - Not available
-            else if (requestInfo.user && requestInfo.post && requestInfo.userId != 0) {
+            if (requestInfo.user && requestInfo.post && requestInfo.userId != 0) {
+                // https://localhost:44321/api/userinfoes/1/posts
+                
                 url += 'userinfoes' + requestInfo.userId + '/posts';
     
                 //Not available in API atm
                 console.log('Out of service')
+            }
+            //All comments from specific user
+            else if (requestInfo.user && requestInfo.userId != 0 && requestInfo.comment) {
+                // https://localhost:44321/api/userinfoes/1/comments
             }
             //Specific user
             else if (requestInfo.user && requestInfo.userId != 0) {
@@ -173,9 +210,57 @@ class DataAccess {
                     console.log(error);
                 });
             }
+            //All comments from specific post
+            else if (requestInfo.post && requestInfo.postId != 0 && requestInfo.comment) {
+                url += 'posts/' + requestInfo.postId + '/comments' ;
+
+                //Return Object
+                let postComments = {};
+
+                axios.get(url)
+                .then(function (response) {
+                    response.data.forEach(comment => {
+                        //Creates postingUser object
+                        const postingUser = new User(comment.post.postingUser.name, comment.post.postingUser.username, comment.post.postingUser.profilPictureUrl, comment.post.postingUser.numberOfPosts, comment.post.postingUser.numberOfComments, new Date(comment.post.postingUser.registerDate));
+
+                        //Sets postingUser's userInfoID
+                        postingUser.userInfoID = comment.post.postingUser.userInfoID;
+
+                        //Creates post object
+                        const post = new Post(comment.post.title, comment.post.content, comment.post.imageUrl, new Date(comment.post.dateOfPost), comment.post.postingUserID, postingUser);
+                        
+                        //Sets post's postID
+                        post.postId = comment.post.postId;
+
+                        //Creates commentingUser object
+                        const commentingUser = new User(comment.commentingUser.name, comment.commentingUser.username, comment.commentingUser.profilPictureUrl, comment.commentingUser.numberOfPosts, comment.commentingUser.numberOfComments, new Date(comment.commentingUser.registerDate));
+
+                        //Sets commentingUser's userInfoId
+                        commentingUser.userInfoID = comment.commentingUser.userInfoID;
+                        
+                        //Creates new comment object
+                        const newComment = new Comment(commentingUser, post, comment.content, new Date(comment.dateOfComment));
+
+                        //Sets new comment's commentId
+                        newComment.commentId = comment.commentId;
+
+                        //Adds comment to data object
+                        data.comments[newComment.commentId] = newComment;
+
+                        //Adds to the return object
+                        postComments[newComment.commentId] = newComment;
+                    });
+
+                    //Runs the callBack function with the result
+                    callBackFunc(postComments);
+                })
+                .catch (function (error) {
+                    console.log(error);
+                });
+            }
             //Specfic post
             else if (requestInfo.post && requestInfo.postId != 0) {
-                url += 'posts' + '/' + requestInfo.postId;
+                url += 'posts/' + requestInfo.postId;
     
                 axios.get(url)
                 .then(function (response) {
@@ -211,7 +296,7 @@ class DataAccess {
                     //Adds each post to data object
                     response.data.forEach(post => {
                         //Creates User object
-                        const postingUser = new User(post.postingUser.name, post.postingUser.username, post.postingUser.profilPictureUrl, post.postingUser.numberOfPosts, post.postingUser.numberOfComments, post.postingUser.registerDate);
+                        const postingUser = new User(post.postingUser.name, post.postingUser.username, post.postingUser.profilPictureUrl, post.postingUser.numberOfPosts, post.postingUser.numberOfComments, new Date(post.postingUser.registerDate));
                         
                         //Sets user ID
                         postingUser.userInfoID = post.postingUser.userInfoID;
@@ -228,6 +313,88 @@ class DataAccess {
 
                     //Runs the callBack function with the result
                     callBackFunc(data.posts);
+                })
+                .catch (function (error) {
+                    console.log(error);
+                });
+            }
+            //Specific comment
+            else if (requestInfo.comment && requestInfo.commentId != 0) {
+                url += 'comments/' + requestInfo.commentId;
+
+                axios.get(url)
+                .then(function (response) {
+                    //Creates postingUser object
+                    const postingUser = new User(response.data.post.postingUser.name, response.data.post.postingUser.username, response.data.post.postingUser.profilPictureUrl, response.data.post.postingUser.numberOfPosts, response.data.post.postingUser.numberOfComments, new Date(response.data.post.postingUser.registerDate));
+
+                    //Sets postingUser's userInfoID
+                    postingUser.userInfoID = response.data.post.postingUser.userInfoID;
+
+                    //Creates post object
+                    const post = new Post(response.data.post.title, response.data.post.content, response.data.post.imageUrl, new Date(response.data.post.dateOfPost), response.data.post.postingUserID, postingUser);
+                    
+                    //Sets post's postID
+                    post.postId = response.data.post.postId;
+
+                    //Creates commentingUser object
+                    const commentingUser = new User(response.data.commentingUser.name, response.data.commentingUser.username, response.data.commentingUser.profilPictureUrl, response.data.commentingUser.numberOfPosts, response.data.commentingUser.numberOfComments, new Date(response.data.commentingUser.registerDate));
+
+                    //Sets commentingUser's userInfoId
+                    commentingUser.userInfoID = response.data.commentingUser.userInfoID;
+                    
+                    //Creates new comment object
+                    const newComment = new Comment(commentingUser, post, response.data.content, new Date(response.data.dateOfComment));
+
+                    //Sets new comment's commentId
+                    newComment.commentId = response.data.commentId;
+
+                    //Adds comment to data object
+                    data.comments[newComment.commentId] = newComment;
+
+                    //Runs the callBack function with the result
+                    callBackFunc(data.comments[newComment.commentId]);
+                })
+                .catch (function (error) {
+                    console.log(error);
+                });
+            }
+            //All comments
+            else if (requestInfo.comment) {
+                url += 'comments';
+
+                axios.get(url)
+                .then(function (response) {
+                    response.data.forEach(comment => {
+                        //Creates postingUser object
+                        const postingUser = new User(comment.post.postingUser.name, comment.post.postingUser.username, comment.post.postingUser.profilPictureUrl, comment.post.postingUser.numberOfPosts, comment.post.postingUser.numberOfComments, new Date(comment.post.postingUser.registerDate));
+
+                        //Sets postingUser's userInfoID
+                        postingUser.userInfoID = comment.post.postingUser.userInfoID;
+
+                        //Creates post object
+                        const post = new Post(comment.post.title, comment.post.content, comment.post.imageUrl, new Date(comment.post.dateOfPost), comment.post.postingUserID, postingUser);
+                        
+                        //Sets post's postID
+                        post.postId = comment.post.postId;
+
+                        //Creates commentingUser object
+                        const commentingUser = new User(comment.commentingUser.name, comment.commentingUser.username, comment.commentingUser.profilPictureUrl, comment.commentingUser.numberOfPosts, comment.commentingUser.numberOfComments, new Date(comment.commentingUser.registerDate));
+
+                        //Sets commentingUser's userInfoId
+                        commentingUser.userInfoID = comment.commentingUser.userInfoID;
+                        
+                        //Creates new comment object
+                        const newComment = new Comment(commentingUser, post, comment.content, new Date(comment.dateOfComment));
+
+                        //Sets new comment's commentId
+                        newComment.commentId = comment.commentId;
+
+                        //Adds comment to data object
+                        data.comments[newComment.commentId] = newComment;
+                    });
+
+                    //Runs the callBack function with the result
+                    callBackFunc(data.comments);
                 })
                 .catch (function (error) {
                     console.log(error);
@@ -267,5 +434,6 @@ class DataAccess {
 
 let data = {
     users: {},
-    posts: {}
+    posts: {},
+    comments: {}
 };

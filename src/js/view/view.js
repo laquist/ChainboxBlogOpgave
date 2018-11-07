@@ -14,7 +14,8 @@ let DOMstrings = {
         contentContainer: '#contentContainer',
         date: '#postDate',
         title: '#postTitle',
-        author: '#postAuthor'
+        author: '#postAuthor',
+        commentContainer: '#commentContainer'
     },
     admin: {
         title: '#titleInput',

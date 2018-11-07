@@ -1,6 +1,5 @@
 class Comment {
-    constructor (commentId, commentingUser, post, content, dateOfComment) {
-        this.commentId = commentId;
+    constructor (commentingUser, post, content, dateOfComment) {
         this.commentingUser = commentingUser;
         this.post = post;
         this.content = content;
