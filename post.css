@@ -27,7 +27,7 @@ main #postContent {
     line-height: 2.3rem;
 }
 
-#comments article img {
+#commentContainer article img {
     height: 101px;
     width: 101px;
     border-radius: 50%

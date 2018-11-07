@@ -26,8 +26,6 @@ class PostView {
     }
     
     displayComments (comments) {
-        //Test
-        // console.log(comments);
         const commentContainer = document.querySelector(DOMstrings.post.commentContainer);
         
         if (comments.length !== 0) {
@@ -36,7 +34,7 @@ class PostView {
 
                 //Creates HTML
                 const html = `
-                <article class="d-flex mb-5" id="${comment.commentId}">
+                <article class="d-flex mb-5" id="commentID-${comment.commentId}">
                 <img src="${comment.commentingUser.profilPictureUrl}" alt="${comment.commentingUser.name}">
                 
               
