@@ -15,17 +15,6 @@ class Controller {
         adminView.clearFields();
     }
 
-    // static newUser () {
-    //     //Gets info from view
-    //     //const newUser = GET USER SOMEWHERE FROM
-
-    //     //TEMP
-    //     //let newUser = new User('John', 'JohnnyBoy', 'john.jpg', 2, 4, new Date());
-
-    //     //Saves (via the API)
-    //     DataAccess.saveUser(newUser);
-    // }
-
     static displayPosts () {
         //Loads posts from API and calls the callback function, to insert posts on the page
         DataAccess.loadAllPosts(homeView.displayPosts);
@@ -41,33 +30,20 @@ class Controller {
         DataAccess.loadPostComments(postID, postView.displayComments);
     }
 
-    //Temp?
-    static getAllComments() {
-        DataAccess.loadAllComments(Controller.print);
-    }
-
-    //Temp?
-    static getAllPosts() {
-        DataAccess.loadAllPosts(Controller.print);
-    }
-
-    //Temp?
-    static getAllUsers() {
-        DataAccess.loadAllUsers(Controller.print);
-    }
-
-    static test () {
-        DataAccess.loadPostComments(4, Controller.print);
-    }
-
-    //TEMP
-    static print (input) {
-        console.log(input);
-    }
-
     static updateAuthorForm () {
         //Loads users/authors from API and calls adminView.updateAuthors() (as callback function)
         DataAccess.loadAllUsers(adminView.updateAuthors);
+    }
+
+    static addEventListenerToPost (postID) {
+        //Make blog posts clickable
+        document.querySelector('#postID-' + postID).addEventListener('click', function () {
+            //Saves the clicked post's ID to sessionStorage, to use it when post.html loads
+            sessionStorage.setItem('postID', postID);
+
+            //Changes page to post.html
+            document.location = '/post.html';
+        });
     }
 
     static setupEventListeners () {
@@ -79,25 +55,9 @@ class Controller {
                 //Loads post previews to index.html
                 Controller.displayPosts();
 
+                //Sets chosen post/clicked post to 0 (none)
                 sessionStorage.setItem('postID', 0);
             });
-
-            //Make blog posts clickable
-            const postLinks = document.querySelectorAll(DOMstrings.home.postLink);
-
-            postLinks.forEach(postLink => {
-                postLink.addEventListener('click', function (event) {
-                    const postID = event.target.closest('article').id.split('postID-')[1];
-    
-                    //Saves the clicked post's ID to sessionStorage, to use it when post.html loads
-                    sessionStorage.setItem('postID', postID);
-
-                    //Changes page to post.html
-                    document.location = '/post.html';
-                });
-            });
-
-            // EventListener til click på en post, EventListener til click på nav (og skift af classen actice)
         }
         else if (document.URL.includes('post.html')) {
             window.addEventListener('load', function () {

@@ -1,7 +1,6 @@
 class AdminView {
     getInfo () {
         let info = {};
-        let error = false;
 
         //Validates info
         if (document.querySelector(DOMstrings.admin.title).value
@@ -10,19 +9,13 @@ class AdminView {
         && document.querySelector(DOMstrings.admin.image).textContent !== 'No image chosen'
         ) {
             info.title = document.querySelector(DOMstrings.admin.title).value;
-            // info.authorId = document.querySelector(DOMstrings.admin.author).options[document.querySelector(DOMstrings.admin.author).selectedIndex].id; //Skal få dens options elements ID
-            info.authorId = document.querySelector(DOMstrings.admin.author).options[document.querySelector(DOMstrings.admin.author).selectedIndex].id.split('userID-')[1]; //Skal få dens options elements ID
+            info.authorId = document.querySelector(DOMstrings.admin.author).options[document.querySelector(DOMstrings.admin.author).selectedIndex].id.split('userID-')[1];
             info.content = document.querySelector(DOMstrings.admin.content).value;
             info.imageUrl = document.querySelector(DOMstrings.admin.image).textContent;
         }
-        else {
-            //ERROR
-            error = true;
-        }
 
-        if (!error) {
-            return info;
-        }
+        //Returns the info object
+        return info;
     }
 
     clearFields () {
@@ -35,29 +28,12 @@ class AdminView {
     updateAuthors (authors) {
         const authorsElement = document.querySelector(DOMstrings.admin.author);
 
-        //Creates an option element with relavant id and text
+        //Creates an option element for each user/author
         Object.keys(authors).forEach(key => {
-            // if (option) {
-
-            // }
-
             let newOption = document.createElement('option');
             newOption.text = authors[key].name;
             newOption.id = 'userID-' + authors[key].userInfoID;
             authorsElement.add(newOption);
         });
-    }
-
-    checkForExistingElement (id) {
-        const options = document.querySelector(DOMstrings.admin.author).options;
-        let elementExists = false;
-
-        options.forEach(option => {
-            if (option.id === id) {
-                elementExists = true;
-            }
-        });
-
-        return elementExists;
     }
 }

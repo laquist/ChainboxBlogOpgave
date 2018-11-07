@@ -4,12 +4,13 @@ class View {
     }
 }
 
-let DOMstrings = {
+const DOMstrings = {
     home: {
         articleContainer: '#articleContainer',
-        postLink: '.postLink'
+        navLink: '.nav-link',
     },
     post: {
+        navLink: '.nav-link',
         headerImgContainer: '#headerImgContainer',
         contentContainer: '#contentContainer',
         date: '#postDate',
@@ -28,4 +29,4 @@ let DOMstrings = {
     }
 };
 
-let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
