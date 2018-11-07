@@ -100,9 +100,6 @@ class Controller {
     }
     
     static initialize () {
-        //Creates Blog instance
-        blog = new Blog();
-
         //Creates View instances
         view = new View();
         homeView = new HomeView();
@@ -111,6 +108,14 @@ class Controller {
 
         //Adds EventListeners
         Controller.setupEventListeners();
+    }
+
+    static test () {
+        DataAccess.loadUserPosts(1, Controller.print)
+    }
+
+    static print (data) {
+        console.log(data);
     }
 }
 

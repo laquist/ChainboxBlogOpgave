@@ -55,7 +55,7 @@ class DataAccess {
         DataAccess.loadData(requestInfo, callBackFunc);
     }
 
-    //Load all posts from user
+    //Load all posts from specific user
     static loadUserPosts (userID, callBackFunc) {
         const requestInfo = {
             user: true,
@@ -152,16 +152,131 @@ class DataAccess {
         ){
             //All posts from specific user - Not available
             if (requestInfo.user && requestInfo.post && requestInfo.userId != 0) {
-                // https://localhost:44321/api/userinfoes/1/posts
-                
-                url += 'userinfoes' + requestInfo.userId + '/posts';
-    
-                //Not available in API atm
-                console.log('Out of service')
+                url += 'userinfoes/' + requestInfo.userId + '/posts';
+                                
+                //Return object
+                let userPosts = {};
+
+                axios.get(url)
+                .then(function (response) {
+                    //Adds each post to data object
+                    response.data.forEach(post => {
+                        //Creates User object
+                        // const postingUser = new User(post.postingUser.name, post.postingUser.username, post.postingUser.profilPictureUrl, post.postingUser.numberOfPosts, post.postingUser.numberOfComments, new Date(post.postingUser.registerDate));
+                        //Er null i API svaret
+                        const postingUser = null;
+
+                        //Sets user ID
+                        // postingUser.userInfoID = post.postingUser.userInfoID;
+
+                        //Creates new Post object
+                        let newPost = new Post(post.title, post.content, post.imageUrl, new Date(post.dateOfPost), post.postingUserID, postingUser);
+
+                        //Sets post ID
+                        newPost.postId = post.postId;
+                        
+                        //Adds user to data object
+                        data.posts[newPost.postId] = newPost;
+
+                        //Adds to the return object
+                        userPosts[newPost.postId] = newPost;
+                    });
+
+                    //Runs the callBack function with the result
+                    callBackFunc(userPosts);
+                })
+                .catch (function (error) {
+                    console.log(error);
+                });
             }
             //All comments from specific user
             else if (requestInfo.user && requestInfo.userId != 0 && requestInfo.comment) {
-                // https://localhost:44321/api/userinfoes/1/comments
+                url += 'userinfoes/' + requestInfo.userId + '/comments' ;
+
+                //Return Object
+                let userComments = {};
+
+                axios.get(url)
+                .then(function (response) {               
+                    if (response.data.length !== 0) { 
+                        if (response.data.length > 1) {
+                            response.data.forEach(comment => {
+                                //Creates postingUser object
+                                // const postingUser = new User(comment.post.postingUser.name, comment.post.postingUser.username, comment.post.postingUser.profilPictureUrl, comment.post.postingUser.numberOfPosts, comment.post.postingUser.numberOfComments, new Date(comment.post.postingUser.registerDate));
+                                //Er null i API svaret
+                                const postingUser = null;
+
+                                //Sets postingUser's userInfoID
+                                // postingUser.userInfoID = comment.post.postingUser.userInfoID;
+        
+                                //Creates post object
+                                const post = new Post(comment.post.title, comment.post.content, comment.post.imageUrl, new Date(comment.post.dateOfPost), comment.post.postingUserID, postingUser);
+                                
+                                //Sets post's postID
+                                post.postId = comment.post.postId;
+        
+                                //Creates commentingUser object
+                                const commentingUser = new User(comment.commentingUser.name, comment.commentingUser.username, comment.commentingUser.profilPictureUrl, comment.commentingUser.numberOfPosts, comment.commentingUser.numberOfComments, new Date(comment.commentingUser.registerDate));
+        
+                                //Sets commentingUser's userInfoId
+                                commentingUser.userInfoID = comment.commentingUser.userInfoID;
+                                
+                                //Creates new comment object
+                                const newComment = new Comment(commentingUser, post, comment.content, new Date(comment.dateOfComment));
+        
+                                //Sets new comment's commentId
+                                newComment.commentId = comment.commentId;
+        
+                                //Adds comment to data object
+                                data.comments[newComment.commentId] = newComment;
+        
+                                //Adds to the return object
+                                userComments[newComment.commentId] = newComment;
+                            });
+                        }
+                        else {
+                            const comment = response.data;
+
+                            //Creates postingUser object
+                            // const postingUser = new User(comment.post.postingUser.name, comment.post.postingUser.username, comment.post.postingUser.profilPictureUrl, comment.post.postingUser.numberOfPosts, comment.post.postingUser.numberOfComments, new Date(comment.post.postingUser.registerDate));
+                            //Er null i API svaret
+                            const postingUser = null;
+
+                            //Sets postingUser's userInfoID
+                            // postingUser.userInfoID = comment.post.postingUser.userInfoID;
+
+                            //Creates post object
+                            const post = new Post(comment.post.title, comment.post.content, comment.post.imageUrl, new Date(comment.post.dateOfPost), comment.post.postingUserID, postingUser);
+                            
+                            //Sets post's postID
+                            post.postId = comment.post.postId;
+
+                            //Creates commentingUser object
+                            const commentingUser = new User(comment.commentingUser.name, comment.commentingUser.username, comment.commentingUser.profilPictureUrl, comment.commentingUser.numberOfPosts, comment.commentingUser.numberOfComments, new Date(comment.commentingUser.registerDate));
+
+                            //Sets commentingUser's userInfoId
+                            commentingUser.userInfoID = comment.commentingUser.userInfoID;
+                            
+                            //Creates new comment object
+                            const newComment = new Comment(commentingUser, post, comment.content, new Date(comment.dateOfComment));
+
+                            //Sets new comment's commentId
+                            newComment.commentId = comment.commentId;
+
+                            //Adds comment to data object
+                            data.comments[newComment.commentId] = newComment;
+
+                            //Adds to the return object
+                            userComments[newComment.commentId] = newComment;
+                        }
+
+                        //Runs the callBack function with the result
+                        callBackFunc(userComments);
+                    }
+                })
+                .catch (function (error) {
+                    console.log(error);
+                });
             }
             //Specific user
             else if (requestInfo.user && requestInfo.userId != 0) {
@@ -406,19 +521,20 @@ class DataAccess {
         }
     }
 
+    //Save post
     static savePost (post) {
         const url = 'https://localhost:44321/api/posts/';
 
         DataAccess.saveData(url, post);
     }
 
+    //Save user
     static saveUser (user) {
         const url = 'https://localhost:44321/api/userinfoes/';
 
         DataAccess.saveData(url, user);
     }
 
-    //Tjek om response er success eller fejl? Og lav en popup eller andet ved fejl?
     static saveData (url, data) {
         axios.post(url, data)
         .then(function (response) {
