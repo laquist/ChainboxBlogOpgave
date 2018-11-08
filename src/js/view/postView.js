@@ -50,5 +50,4 @@ class PostView {
             });
         }
     }
-// <a class="commentReply"><p class="m-0 text-muted">Svar</p></a>
 }

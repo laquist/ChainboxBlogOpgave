@@ -13,7 +13,7 @@ class AdminView {
             info.content = document.querySelector(DOMstrings.admin.content).value;
             info.imageUrl = document.querySelector(DOMstrings.admin.image).textContent;
         }
-
+        
         //Returns the info object
         return info;
     }

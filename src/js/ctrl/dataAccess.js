@@ -525,7 +525,7 @@ class DataAccess {
     static savePost (post) {
         const url = 'https://localhost:44321/api/posts/';
 
-        DataAccess.saveData(url, post);
+        return DataAccess.saveData(url, post);
     }
 
     //Save user
@@ -538,12 +538,13 @@ class DataAccess {
     static saveData (url, data) {
         axios.post(url, data)
         .then(function (response) {
-            // console.log(response);
             console.log('Successfully saved')
+            return response;
         })
         .catch(function (error) {
-            console.log(error);
-            console.log('Error while saving')
+            // console.log(error);
+            console.error('Error while saving');
+            return error;
         });
     }
 }

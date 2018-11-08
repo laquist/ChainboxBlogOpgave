@@ -6,10 +6,15 @@ class Controller {
         const info = adminView.getInfo();
 
         //Creates new Post
-        const newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId, data.users[authorId]); 
+        const newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId, data.users[info.authorId]); 
         
         //Saves (via the API)
-        DataAccess.savePost(newPost);
+        if (DataAccess.savePost(newPost)) {
+            console.log('Success?');
+        }
+        else {
+            console.log('Error');
+        }
 
         //Clears fields
         adminView.clearFields();
