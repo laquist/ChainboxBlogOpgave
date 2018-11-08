@@ -81,14 +81,19 @@ class Controller {
 
             //'Chose Image' button
             document.querySelector(DOMstrings.admin.imageBtn).addEventListener('click', function () {
-                let imgURL = prompt("Please enter the image URL");
-                console.log(imgURL);
-        
+                let imgURL;
+
+                //Checks if URL input has a value, so you can edit the value
+                if (document.querySelector(DOMstrings.admin.image).textContent !== 'No image chosen') {
+                    imgURL = prompt("Please enter the image URL", document.querySelector(DOMstrings.admin.image).textContent)
+                }
+                else {
+                    imgURL = prompt("Please enter the image URL");
+                }
+                
+                //Sets the chosen image if value is valid
                 if (imgURL) {
                     document.querySelector(DOMstrings.admin.image).textContent = imgURL;
-                } else {
-                    //ERROR
-                    input = "No image chosen";
                 }
             });
 

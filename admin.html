@@ -75,10 +75,12 @@
 
                 <div class="form-group">
                   <label for="imageInputBtn" class="d-block">Featured image</label>
-                  <button type="button" class="btn btn-outline-dark" id="imageInputBtn">Chose image</button>
-
-                  <p class="d-inline-block px-3" id="imageInput">No image chosen</p>
-                  <p class="text-muted" id="imageTextHelp">Chose an image from the internet and use its URL.</p>
+                  
+                  <div class="d-flex" id="choseImg">
+                    <button type="button" class="btn btn-outline-dark" id="imageInputBtn">Chose image</button>
+                    <p class="d-inline-block px-3 my-auto text-truncate" id="imageInput">No image chosen</p>
+                  </div>
+                  <p class="text-muted mt-2" id="imageTextHelp">Chose an image from the internet and use its URL.</p>
                 </div>
 
                 <button type="button" class="btn text-white px-3 float-right" id="publishBtn">Publish</button>
