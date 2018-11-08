@@ -41,7 +41,7 @@ class PostView {
                     <div class="d-flex flex-column justify-content-between py-1 ml-4">
                         <p class="m-0 font-weight-bold" id="commentAuthor">${comment.commentingUser.name}</p>
                         <p class="m-0" id="commentContent">${comment.content}</p>
-                        <a class="commentReply"><p class="m-0 text-muted">Svar</p></a>
+                        <a class="commentReply m-0 text-muted">Svar</a>
                     </div>
                 </article>
                 `;
@@ -50,4 +50,5 @@ class PostView {
             });
         }
     }
+// <a class="commentReply"><p class="m-0 text-muted">Svar</p></a>
 }

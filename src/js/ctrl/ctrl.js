@@ -1,4 +1,4 @@
-let blog, view, homeView, postView, adminView;
+let view, homeView, postView, adminView;
 
 class Controller {
     static newPost () {
@@ -37,12 +37,16 @@ class Controller {
 
     static addEventListenerToPost (postID) {
         //Make blog posts clickable
-        document.querySelector('#postID-' + postID).addEventListener('click', function () {
-            //Saves the clicked post's ID to sessionStorage, to use it when post.html loads
-            sessionStorage.setItem('postID', postID);
-
-            //Changes page to post.html
-            document.location = '/post.html';
+        const postLinks = document.querySelectorAll('#postID-' + postID + ' .postLink');
+        
+        postLinks.forEach(postLink => {
+            postLink.addEventListener('click', function () {
+                //Saves the clicked post's ID to sessionStorage, to use it when post.html loads
+                sessionStorage.setItem('postID', postID);
+    
+                //Changes page to post.html
+                document.location = '/post.html';
+            });
         });
     }
 
@@ -115,13 +119,13 @@ class Controller {
         Controller.setupEventListeners();
     }
 
-    static test () {
-        DataAccess.loadUserPosts(1, Controller.print)
-    }
+    // static test () {
+    //     DataAccess.loadUserPosts(1, Controller.print)
+    // }
 
-    static print (data) {
-        console.log(data);
-    }
+    // static print (data) {
+    //     console.log(data);
+    // }
 }
 
 // Starter

@@ -33,6 +33,10 @@ main #postContent {
     border-radius: 50%
 }
 
+.commentReply:hover {
+    cursor: pointer;
+}
+
 
 /* MEDIA QUERIES */
 @media screen and (max-width: 768px) {

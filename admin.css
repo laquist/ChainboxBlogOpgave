@@ -45,6 +45,7 @@ main form {
     direction: rtl;
 }
 
+
 /* MEDIA QUERIES - NAV COLLAPSE */
 @media screen and (max-width: 992px) {
     .navContainer {
