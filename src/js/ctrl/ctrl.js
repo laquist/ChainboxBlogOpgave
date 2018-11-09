@@ -6,15 +6,22 @@ class Controller {
         const info = adminView.getInfo();
 
         //Creates new Post
-        const newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId, data.users[info.authorId]); 
+        // const newPost = new Post(info.title, info.content, info.imageUrl, new Date(), info.authorId, data.users[info.authorId]); 
         
         //Saves (via the API)
-        if (DataAccess.savePost(newPost)) {
-            console.log('Success?');
-        }
-        else {
-            console.log('Error');
-        }
+        // DataAccess.savePost(newPost);
+        // DataAccess.savePost(newPost, adminView.resultNotification);
+
+        const failPost = new Post();
+        DataAccess.savePost(failPost, adminView.resultNotification);
+    
+        //FEJL - Giver error selvom den var success
+        // if (DataAccess.savePost(newPost)) {
+        //     adminView.resultNotification('success');
+        // }
+        // else {
+        //     adminView.resultNotification('error');
+        // }
 
         //Clears fields
         adminView.clearFields();

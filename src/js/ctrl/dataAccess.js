@@ -430,7 +430,7 @@ class DataAccess {
                     callBackFunc(data.posts);
                 })
                 .catch (function (error) {
-                    console.log(error);
+                    console.error(error);
                 });
             }
             //Specific comment
@@ -522,10 +522,10 @@ class DataAccess {
     }
 
     //Save post
-    static savePost (post) {
+    static savePost (post, callBackFunc) {
         const url = 'https://localhost:44321/api/posts/';
 
-        return DataAccess.saveData(url, post);
+        DataAccess.saveData(url, post, callBackFunc);
     }
 
     //Save user
@@ -535,16 +535,16 @@ class DataAccess {
         DataAccess.saveData(url, user);
     }
 
-    static saveData (url, data) {
+    static saveData (url, data, callBackFunc) {
         axios.post(url, data)
         .then(function (response) {
             console.log('Successfully saved')
-            return response;
+            callBackFunc('success'); //evt callBackFunc('success', response)
         })
         .catch(function (error) {
-            // console.log(error);
             console.error('Error while saving');
-            return error;
+            callBackFunc('error'); //evt callBackFunc('error', error)
+            // return error;
         });
     }
 }

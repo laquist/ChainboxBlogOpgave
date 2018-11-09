@@ -36,4 +36,13 @@ class AdminView {
             authorsElement.add(newOption);
         });
     }
+
+    resultNotification (result) {
+        if (result === 'success') {
+            alert('Post successfully published!')
+        }
+        else if (result === 'error') {
+            alert('Error while publishing post!')
+        }
+    }
 }
